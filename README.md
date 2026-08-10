@@ -8,13 +8,19 @@ A collection of reusable AI agent skills used for development, code review, loca
 
 **File:** `odoo_localization_arabic_qa_skill.md`
 
-A reusable skill for investigating, implementing, reviewing, and validating Arabic localization in Odoo modules.
+A reusable skill for safely investigating, implementing, reviewing, and validating Arabic localization in Odoo modules across different Odoo versions.
 
-The skill is designed to work across different Odoo versions and requires the AI agent to inspect the actual project before making localization changes.
+### 2. Odoo Codebase Investigator
+
+**File:** `odoo_codebase_investigator_skill.md`
+
+A read-only investigation skill for understanding an Odoo codebase before changes are made. It traces feature ownership, XML/QWeb inheritance, Python model and method overrides, controllers, JavaScript, assets, dependencies, and existing implementations, then produces a structured investigation report with the safest recommended modification location.
 
 ## Repository Structure
 
 ```text
 Plemo-Skills/
 ├── README.md
-└── odoo_localization_arabic_qa_skill.md
+├── odoo_localization_arabic_qa_skill.md
+└── odoo_codebase_investigator_skill.md
+```
