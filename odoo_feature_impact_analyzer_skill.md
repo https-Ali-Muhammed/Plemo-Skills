@@ -6,7 +6,9 @@ Use this skill to analyze the impact of a requested Odoo feature, enhancement, b
 
 The skill must determine what existing implementation the request touches, which modules and layers are affected, what direct and indirect dependencies exist, what runtime behavior may change, what regressions are possible, what upgrade or data-migration consequences may exist, and where the smallest safe implementation boundary should be.
 
-This skill is impact-analysis and planning only by default.
+This skill performs Odoo-specific change-impact discovery and regression-evidence analysis by default.
+
+It does not replace the agent's native implementation planning.
 
 Do not modify files, create implementation files, change manifests, install or upgrade modules, update the database, run migrations, refactor code, implement the feature, commit, push, merge, or create a pull request during the impact-analysis phase.
 
@@ -24,6 +26,63 @@ Core principles:
 - Produce the impact report before modifying anything.
 
 ---
+
+## 0. Relationship With Native Agent Capabilities and Other Skills
+
+This skill adds Odoo-specific impact evidence, reverse-dependency discovery, regression requirements, upgrade/data consequences, runtime-verification requirements, constraints, and safe implementation boundaries.
+
+It does not replace the agent's native repository discovery, implementation planning, implementation, or task-mode behavior.
+
+Reuse reliable evidence already collected by the Odoo Codebase Investigator or another skill during the current task. Do not repeat investigation unless that evidence is insufficient, stale, or does not cover the changed surface.
+
+Repository-specific instructions such as `plemo.md`, configured addon paths, and reliable native discovery tools take precedence over generic repository-layout examples in this skill.
+
+If the user's current request is analysis/review only:
+
+- remain read-only;
+- produce the impact evidence/report;
+- do not implement.
+
+If the user's current request already explicitly asks to add, fix, build, change, or implement:
+
+- perform impact analysis as a read-only sub-phase;
+- the original request already counts as implementation authorization;
+- hand the evidence to the agent's native planning process;
+- continue implementation without asking for a second approval;
+- ask only if the impact analysis reveals a material scope change, destructive action, or unresolved decision that makes proceeding unsafe.
+
+The skill is an evidence provider, not a second planning or authorization system.
+
+## 0.1 Materiality Gate
+
+Use the full Feature Impact Analyzer for **material changes**.
+
+Material changes include, for example:
+
+- model/schema changes;
+- stored computed fields;
+- constraints;
+- business-method overrides;
+- shared methods or shared custom modules;
+- XML/QWeb changes with downstream inheritance;
+- controller or route changes;
+- public/portal behavior;
+- JavaScript/OWL patches;
+- RPC/API contract changes;
+- asset-bundle changes;
+- ACL/record-rule/security changes;
+- multi-company behavior;
+- multi-website behavior;
+- migration or existing-data changes;
+- `noupdate` records;
+- selection-key changes;
+- external integrations;
+- performance-sensitive logic;
+- changes with uncertain blast radius.
+
+For trivial isolated non-behavioral changes such as obvious text corrections, comments, or local formatting fixes, do not force the full impact workflow unless explicitly requested or needed to resolve ownership/safety.
+
+Use the smallest applicable portion of the skill for the actual risk.
 
 ## 1. Determine the Requested Change
 
@@ -112,31 +171,34 @@ Never predict impact from filenames or a single matching source file alone.
 
 ## 3. Mandatory Startup Procedure
 
-Follow this sequence:
+For a material change, follow this sequence:
 
-1. Determine the requested change.
+1. Determine the requested change and task mode.
 2. Determine the project and repository.
 3. Detect the Odoo version.
-4. Locate the relevant customer addons.
-5. Reuse or perform codebase investigation.
+4. Locate the relevant addons using repository-specific guidance first.
+5. Reuse or perform only the codebase investigation needed for impact analysis.
 6. Identify the original feature owner.
 7. Identify customer/custom extensions.
 8. Trace current execution flow.
-9. Build the dependency graph.
+9. Build dependency and reverse-dependency evidence.
 10. Identify all affected technical layers.
 11. Analyze direct impact.
-12. Analyze indirect and transitive impact.
+12. Analyze indirect, transitive, dynamic, and runtime-only impact.
 13. Analyze data and upgrade impact.
 14. Analyze security and access impact.
-15. Analyze frontend and asset impact.
+15. Analyze frontend, JS/RPC, and asset impact.
 16. Analyze integrations and contracts.
 17. Analyze performance impact.
 18. Analyze regression surface.
-19. Compare implementation options.
-20. Recommend the smallest safe implementation scope.
-21. Define required validation and tests.
-22. Produce the Feature Impact Analysis Report.
-23. Wait for an explicit implementation request before modifying code.
+19. Identify candidate safe implementation boundaries and unsafe boundaries.
+20. Recommend the smallest safe implementation boundary.
+21. Define required static/runtime validation evidence.
+22. Produce the Impact Evidence handoff and, when appropriate, the detailed Feature Impact Analysis Report.
+23. If the task is analysis-only, stop.
+24. If implementation was already authorized by the user's original request, return control to the agent's native planner and continue unless a new material decision requires user input.
+
+Do not create a second generic implementation plan inside this skill.
 
 ---
 
@@ -144,9 +206,10 @@ Follow this sequence:
 
 Before making architectural or compatibility assumptions, determine the actual Odoo version.
 
-Inspect strong evidence such as:
+Inspect the strongest evidence available, such as:
 
 ```text
+target/custom module __manifest__.py version prefix
 odoo/release.py
 odoo/version.py
 odoo/__init__.py
@@ -158,6 +221,20 @@ project configuration
 existing JavaScript imports
 existing frontend APIs
 ```
+
+A valid target/custom module manifest version prefix is acceptable primary evidence when Odoo core source is unavailable.
+
+Examples:
+
+```text
+17.0.1.0.0 -> Odoo 17
+18.0.2.1.0 -> Odoo 18
+19.0.1.0.0 -> Odoo 19
+```
+
+Use direct Odoo core source as stronger confirmation when available.
+
+Do not reject valid manifest evidence merely because `odoo/release.py` is absent.
 
 Record:
 
@@ -175,6 +252,20 @@ A safe implementation in Odoo 17 may be incorrect in Odoo 18 or later.
 ---
 
 ## 5. Find the Repository and Project
+
+### Repository Discovery Precedence
+
+Use this precedence:
+
+1. repository-specific instructions such as `plemo.md`;
+2. agent-native repository/addon discovery tools;
+3. configured addon paths and manifests;
+4. verified project conventions;
+5. fallback conventions documented below.
+
+The `odoo/Customers/<project_name>/addons/` structure is a known Plemo layout, not a universal requirement.
+
+When native tools such as `find_addon`, `search_code`, targeted `read_file`, or equivalents are available, prefer them for focused discovery.
 
 Identify:
 
@@ -194,7 +285,7 @@ Customer projects in this environment normally use:
 odoo/Customers/<project_name>/addons/
 ```
 
-When a project name is known, inspect this path first for project-specific changes.
+When this layout is confirmed for the repository, inspect this path first for project-specific changes. Otherwise follow `plemo.md`, configured addon paths, manifests, or native discovery evidence.
 
 Do not assume the project folder itself is an Odoo module.
 
@@ -443,18 +534,88 @@ Determine which dependency behavior the planned change relies on.
 
 ## 13. Analyze Reverse Dependencies
 
-Search for modules that depend on the module being changed.
+Search for modules and runtime consumers that depend on the component being changed.
 
-A change inside a shared custom module may affect several customer features.
+Do not limit reverse-dependency discovery to manifest `depends`.
+
+For a **method**, trace where materially relevant:
+
+```text
+all definitions
+all overrides
+super() chain
+direct callers
+callers of callers
+controllers
+scheduled/server actions
+RPC/frontend callers
+downstream workflows
+```
+
+For a **field**, trace:
+
+```text
+compute dependencies
+related fields
+domains
+constraints
+Python readers/comparisons
+views
+reports
+exports
+integrations
+frontend consumers
+```
+
+For **XML/QWeb**, trace:
+
+```text
+original view/template
+direct inherited views
+transitive inherited views
+XPath consumers
+JS selectors
+CSS/SCSS selectors
+website-specific/database views when relevant
+```
+
+For a **route/API**, trace:
+
+```text
+JS callers
+forms
+external consumers
+controller overrides
+model methods
+response consumers
+```
+
+Also search for dynamic/runtime patterns when evidence suggests they matter:
+
+```text
+getattr(...)
+self.env[model_name]
+ref()/env.ref() built from values
+safe_eval / server-action code
+cron code
+route strings
+registry/service lookup
+dynamic RPC/model calls
+```
 
 Record:
 
 ```text
-Changed module:
-Reverse-dependent modules:
+Changed component/module:
+Static reverse dependencies:
+Dynamic/runtime dependencies:
+Transitive chains:
 Shared usage:
 Potential blast radius:
+Confidence:
 ```
+
+If no repository caller is found, do not conclude that no consumer exists. State whether external/runtime consumers remain possible.
 
 Do not treat a module as isolated simply because the request names only one feature.
 
@@ -587,6 +748,72 @@ Determine:
 Do not treat a compute-method edit as a normal method change when `store=True`.
 
 ---
+
+### 18.1 Upgrade Side-Effect Chain for Stored Logic
+
+For any stored-compute or schema change, trace the upgrade side-effect chain explicitly:
+
+```text
+Stored field/schema change
+        ↓
+Module upgrade
+        ↓
+Existing records recompute/backfill
+        ↓
+Compute dependencies accessed
+        ↓
+Inverse/write/recompute side effects
+        ↓
+Constraints potentially triggered
+        ↓
+Dependent stored fields potentially recomputed
+        ↓
+Business/data validity
+        ↓
+Performance or upgrade-failure risk
+```
+
+Check, when relevant:
+
+```text
+@api.depends
+@api.depends_context
+@api.constrains
+inverse methods
+related stored fields
+create/write overrides
+selection validity
+required fields
+cross-module dependencies
+record volume
+```
+
+Do not stop at "Odoo will recompute it."
+
+### 18.2 Selection-Change Sweep
+
+For any added, renamed, or removed Selection key, search all relevant consumers:
+
+```text
+selection=
+selection_add=
+Python comparisons
+domains
+filters
+search views
+record rules
+XML modifiers
+JS comparisons
+reports
+exports
+integrations
+migration code
+server actions
+cron code
+existing stored values
+```
+
+Determine whether existing records contain removed/renamed values and whether a migration or compatibility mapping is required.
 
 ## 19. Analyze Related Fields
 
@@ -1092,6 +1319,43 @@ Determine whether the requested change introduces race conditions or stale state
 
 ## 42. Analyze RPC and HTTP Contracts
 
+When searching for frontend callers, include version-appropriate patterns such as:
+
+```text
+rpc(
+orm.call(
+jsonrpc(
+fetch(
+legacy jsonRpc/ajax calls
+route strings
+model method names
+registry entries
+services
+component/template names
+```
+
+For each discovered frontend/backend connection, record:
+
+```text
+Frontend caller:
+File:
+Function/component:
+RPC mechanism:
+Route/model:
+Payload:
+Backend handler:
+Response:
+Frontend consumers:
+Confidence:
+```
+
+If no static caller is found, state:
+
+```text
+No repository caller found.
+External or runtime consumer remains possible.
+```
+
 For every affected frontend request record:
 
 ```text
@@ -1232,6 +1496,16 @@ Do not analyze only new-record behavior.
 ---
 
 ## 50. Analyze Module Install Impact
+
+For every material data/schema change classify all three separately:
+
+```text
+Fresh install impact:
+Existing database upgrade impact:
+Production existing-data impact:
+```
+
+Do not merge these into a single deployment conclusion.
 
 Determine whether the feature affects fresh installation.
 
@@ -1597,13 +1871,26 @@ Classify direct core modification as high upgrade risk unless there is a verifie
 
 ## 70. Analyze Odoo-Version Compatibility
 
-For any proposed API, import, hook, registry, or view behavior:
+For any version-sensitive API, field, import, hook, registry, controller behavior, ORM behavior, or view construct involved in the change:
 
-- confirm it exists in the detected version;
-- search current repository usage;
-- avoid copying patterns from another Odoo version blindly.
+1. detect the project's Odoo version from the strongest available evidence;
+2. verify the API against available source/evidence for that version;
+3. search current repository usage;
+4. consult repository-specific Plemo lessons/skills when available;
+5. do not import a pattern solely because it exists in another Odoo version;
+6. report unresolved version assumptions explicitly.
 
-Record version-sensitive assumptions.
+Do not maintain a giant hardcoded compatibility table inside this skill unless the project provides one as a maintained source of truth.
+
+Record:
+
+```text
+Version-sensitive API/behavior:
+Detected version:
+Evidence checked:
+Compatibility conclusion:
+Remaining assumption:
+```
 
 ---
 
@@ -1717,11 +2004,13 @@ Do not downgrade a severe risk merely because runtime verification is still need
 
 ---
 
-# IMPLEMENTATION OPTION ANALYSIS
+# SAFE IMPLEMENTATION BOUNDARY ANALYSIS
 
-## 76. Identify Candidate Implementation Strategies
+## 76. Identify Candidate Safe Boundaries
 
-When more than one safe approach exists, compare them.
+When more than one technically plausible change boundary exists, compare their impact.
+
+This section provides evidence to the agent's native planner. It is not a second implementation plan.
 
 Example:
 
@@ -1734,9 +2023,9 @@ Option D: Patch frontend component.
 
 ---
 
-## 77. Compare Options
+## 77. Compare Boundary Impact
 
-For each option evaluate:
+For each candidate boundary evaluate:
 
 ```text
 Scope:
@@ -1752,6 +2041,8 @@ Reason to choose/reject:
 ```
 
 Do not choose solely by lowest line count.
+
+Do not expand this section into a step-by-step implementation plan. The native planning process owns exact execution sequencing.
 
 ---
 
@@ -1778,11 +2069,14 @@ State clearly:
 
 ```text
 Recommended module:
-Recommended files:
+Recommended component/file boundary:
 Recommended extension point:
-Expected files not to touch:
+Expected files/modules not to touch:
 Reason:
+Impact advantage over broader boundaries:
 ```
+
+The exact final file-by-file implementation plan remains the responsibility of the agent's native planner.
 
 If a new module is preferable, explain why.
 
@@ -1803,6 +2097,32 @@ Protect:
 - unrelated data.
 
 Explicitly list important no-touch areas.
+
+For material changes, always include:
+
+```text
+Do Not Touch
+
+Odoo core:
+Reason:
+
+Third-party/OCA module:
+Reason:
+
+Shared custom module:
+Reason:
+
+noupdate data:
+Reason:
+
+Sibling customer modules/projects:
+Reason:
+
+Other protected area:
+Reason:
+```
+
+Use `No additional protected areas identified beyond normal repository rules` when appropriate.
 
 ---
 
@@ -1915,6 +2235,44 @@ Correct reports
 
 ---
 
+## 86.1 Runtime Verification Decision Matrix
+
+Do not stop at the phrase `Needs runtime verification`.
+
+For every material change, determine exactly which runtime verification is required and why.
+
+Use the following as a decision guide:
+
+| Change type | Typical required verification |
+|---|---|
+| Stored compute | Module upgrade, recompute observation, logs, data read-back |
+| Constraint | Existing-record upgrade/test data validation |
+| Field type/schema change | Existing-data migration/upgrade test |
+| XML inherited view | Odoo view validation and rendered UI |
+| Website QWeb | Browser render and multi-website check when relevant |
+| JS/OWL patch | Asset load, browser console, affected interaction, RPC behavior |
+| Public route | Anonymous/public-user request and authorization check |
+| Portal route | Portal-user access test |
+| ACL/record-rule change | Relevant user/group access tests |
+| Multi-company | Company A/B isolation and allowed-company behavior |
+| `noupdate` record | Existing database upgrade behavior |
+| New module/data | Fresh install |
+| Existing installed module | Upgrade |
+| External API | Consumer contract verification |
+
+For each required runtime check record:
+
+```text
+Runtime verification required: Yes / No
+Reason:
+Required environment/context:
+Required check:
+Can static analysis prove correctness: Yes / No / Partial
+Blocker if unavailable:
+```
+
+If runtime access is unavailable, do not claim completion. State whether implementation can proceed with a verification warning or must wait.
+
 # OPERATIONAL AND DEPLOYMENT IMPACT
 
 ## 87. Analyze Deployment Requirements
@@ -2023,9 +2381,9 @@ Do not invent certainty.
 
 # SAFETY AND SCOPE
 
-## 93. Read-Only by Default
+## 93. Read-Only During the Impact-Analysis Phase
 
-Do not:
+Do not during impact analysis:
 
 - edit files;
 - create implementation files;
@@ -2048,7 +2406,11 @@ Do not:
 - rebase;
 - create pull requests.
 
-Implementation starts only after an explicit user instruction.
+If the current request is analysis/review only, stop after the impact output.
+
+If the current request already explicitly authorizes add/fix/build/change/implementation, that original request is sufficient authorization for the later implementation phase. Hand the impact evidence to the native planner and continue unless a newly discovered material decision requires user input.
+
+Do not require duplicate implementation approval.
 
 ---
 
@@ -2076,19 +2438,25 @@ Use non-destructive inspection commands.
 
 ---
 
-## 95. Do Not Implement Even If the Solution Is Obvious
+## 95. Do Not Implement During the Impact-Analysis Sub-Phase
 
-If the requested change is straightforward, still report:
+If a material requested change is straightforward, still capture:
 
 ```text
 Current implementation:
 Impact:
 Risks:
-Recommended implementation location:
-Required tests:
+Recommended implementation boundary:
+Required verification:
 ```
 
-Do not apply the change during impact analysis.
+Do not apply the change while impact analysis is active.
+
+For analysis-only tasks, stop there.
+
+For already-authorized implementation tasks, hand the evidence to the native planner and continue after the impact sub-phase.
+
+For trivial isolated non-behavioral changes excluded by the Materiality Gate, do not force this full output.
 
 ---
 
@@ -2104,11 +2472,55 @@ If a shared module would broaden blast radius, prefer a customer-specific extens
 
 # REQUIRED REPORT
 
-## 97. Odoo Feature Impact Analysis Report
+## 97. Impact Evidence Handoff and Detailed Report
 
-Always produce a report before implementation.
+For every material change, produce a compact structured **Impact Evidence** block first.
 
-Use this structure.
+```text
+IMPACT EVIDENCE
+
+Change:
+Task mode:
+Material change: Yes / No
+
+Odoo version:
+Version evidence:
+
+Primary owner:
+Recommended safe boundary:
+
+Affected modules:
+Affected files/components:
+
+Direct dependencies:
+Reverse dependencies:
+Transitive chains:
+Dynamic/runtime dependencies:
+
+Upgrade/data risks:
+Security surface:
+Frontend/JS/RPC surface:
+Integration surface:
+Performance concern:
+
+Regression surface:
+Runtime verification required:
+
+Do-not-touch boundary:
+Remaining unknowns:
+Confidence:
+```
+
+This block is designed to feed the agent's native planning process.
+
+### Report depth
+
+- For a standalone impact-analysis/review request, produce the detailed report below.
+- For an impact-analysis sub-phase inside an already-authorized implementation, the compact Impact Evidence block may be sufficient for a simple/material-but-contained change.
+- Use the full detailed report for complex, shared, security-sensitive, migration-sensitive, integration-sensitive, or high-risk changes.
+- Do not force the full report for trivial changes excluded by the Materiality Gate.
+
+Detailed report structure:
 
 ### 1. Requested Change
 
@@ -2473,7 +2885,7 @@ Explain the decision briefly.
 
 ## 98. Risk Register Is Mandatory
 
-Every impact analysis must include a risk register.
+Every full material impact analysis must include a risk register.
 
 At minimum evaluate:
 
@@ -2495,7 +2907,7 @@ Do not omit a category silently.
 
 ## 99. Change Surface Map Is Mandatory
 
-Always summarize impact across relevant layers.
+For every material change, summarize impact across relevant layers.
 
 Example:
 
@@ -2514,7 +2926,7 @@ This prevents analysis from focusing only on the file that will be edited.
 
 ## 100. Regression Plan Is Mandatory
 
-Before implementation, define what must be tested.
+For every material change, define what must be tested or runtime-verified.
 
 Do not finish with only:
 
@@ -2670,6 +3082,14 @@ Never:
 START
   |
   v
+Is this a material change?
+  |
+  +-- No --> Use only the minimum safety/ownership checks needed.
+  |          Do not force the full impact workflow unless requested.
+  |
+  +-- Yes
+        |
+        v
 Is the requested change clear?
   |
   +-- No --> Resolve from context or ask only if necessary.
@@ -2752,11 +3172,20 @@ Recommend smallest safe implementation boundary.
 Define tests, deployment, rollback.
         |
         v
-Produce Feature Impact Analysis Report.
+Produce Impact Evidence and the appropriate report depth.
         |
         v
-STOP.
-Wait for explicit implementation instruction.
+Is the current request analysis/review only?
+        |
+        +-- Yes --> STOP. Remain read-only.
+        |
+        +-- No, implementation already authorized
+              |
+              v
+        Hand evidence to native planner.
+              |
+              v
+        Continue unless a new material decision requires user input.
 ```
 
 ---
@@ -2770,11 +3199,13 @@ Understand the current feature before predicting impact.
 
 Reuse the Codebase Investigator when reliable evidence already exists.
 
-For customer projects, begin project-specific discovery from:
+For customer projects, follow repository-specific guidance such as `plemo.md` and configured addon paths first.
+
+When the Plemo customer layout is confirmed, this is a useful fallback:
 
 odoo/Customers/<project_name>/addons/
 
-but always trace the feature to its original owner.
+Always trace the feature to its original owner.
 
 Detect the actual Odoo version.
 
@@ -2813,17 +3244,21 @@ protect external contracts and technical identifiers.
 For performance:
 inspect ORM, stored computes, frontend calls, payloads, and assets.
 
-Always build:
+For material changes, build:
 - a Change Surface Map;
+- reverse/transitive dependency evidence;
 - a Risk Register;
-- a Regression Plan;
-- a Recommended Implementation Boundary.
+- concrete regression/runtime-verification requirements;
+- a Recommended Safe Implementation Boundary;
+- a Do-Not-Touch boundary.
 
 Prefer the smallest safe extension.
 
-Do not modify anything during impact analysis.
+Do not modify anything during the impact-analysis phase.
 
-Always produce the impact report first.
+Produce the Impact Evidence handoff before implementation.
 
-Implementation requires an explicit user instruction.
+Do not replace the agent's native implementation plan.
+
+If the user's original request already authorizes implementation, do not ask for a second approval solely because this skill ran.
 ```

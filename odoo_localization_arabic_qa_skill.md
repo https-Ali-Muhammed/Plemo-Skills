@@ -33,6 +33,54 @@ The core operating principle is:
 
 > Investigate first. Understand the existing implementation. Make the smallest safe localization changes. Validate before finishing.
 
+# 0. Native Agent Compatibility, Task Mode, and Skill Scope
+
+This skill adds Plemo-specific Odoo localization rules and safeguards. It does not replace the agent's native repository discovery, planning, implementation, or task-mode behavior.
+
+Reuse reliable evidence already collected during the current task. Do not repeat another skill's investigation unless the existing evidence is insufficient, stale, or does not cover the localization question.
+
+Repository-specific instructions such as `plemo.md`, configured addon paths, and reliable native discovery tools take precedence over generic repository-layout examples in this skill.
+
+Determine the current task mode before making any repository change:
+
+```text
+Investigation / Review / Audit
+Implementation / Fix
+Validation
+```
+
+For **Investigation / Review / Audit**:
+
+- remain read-only;
+- do not create `i18n/`, `ar.po`, `localization.js`, or any other file;
+- do not edit translations, JavaScript, XML, Python, manifests, assets, or styles;
+- report missing localization infrastructure and localization issues only.
+
+For **Implementation / Fix**:
+
+- localization changes are allowed within the user's requested scope;
+- perform the investigation phase first;
+- the user's existing add/fix/build/localize request counts as implementation authorization;
+- do not ask for a second approval solely because this skill performed an investigation;
+- ask only when the investigation reveals a material scope change, destructive operation, or unresolved decision that would make proceeding unsafe.
+
+For **Validation**:
+
+- validate the current implementation;
+- remain read-only unless the user explicitly asked for fixes as part of validation.
+
+Use the smallest applicable portion of this skill for the task. Do not force a full localization audit/report for a trivial isolated correction unless the user explicitly requests one.
+
+## 0.1 Plemo JavaScript Localization Policy Scope
+
+The `localize("English", "Arabic")` helper architecture in this skill is a Plemo/project localization policy.
+
+Apply it when this skill is active for the target module/workflow.
+
+Do not treat the prohibition on new JavaScript `_t()` usage as a universal repository-wide Odoo rule for unrelated modules or projects unless their localization policy explicitly adopts this architecture.
+
+Existing valid Odoo-native `_t()` usage outside the target workflow must not be rewritten merely to satisfy this skill.
+
 ---
 
 # 1. Mandatory Startup Procedure
@@ -56,21 +104,29 @@ Follow this order whenever this skill is used:
 
 ---
 
-# 2. Ask for the Module Name
+# 2. Resolve the Target Module
 
-If the user has not already provided the target module name, ask:
+If the target module is already provided or clearly established, use it and verify its path.
 
-> Which Odoo module do you want me to localize?
+If the module is not explicitly named:
 
-Do not begin modifying files until the target module is known.
+1. attempt to resolve it from repository evidence and current context;
+2. use repository-specific guidance such as `plemo.md` when available;
+3. use native addon/code discovery tools when available;
+4. search by feature, model, field, XML ID, template, route, visible text, JavaScript selector, or other strong evidence;
+5. verify the owning/custom module before editing anything;
+6. ask the user only if multiple plausible module targets remain and choosing incorrectly would materially change the implementation.
 
-If the module name is already provided in the current request or clearly established in the current task, do not ask again.
+Do not stop merely because the user described a feature or page instead of naming its module.
+
+Do not modify files until the target module is resolved with sufficient confidence.
 
 Record:
 
 ```text
 Target module:
 Module path:
+Resolution evidence:
 ```
 
 ---
@@ -106,9 +162,10 @@ If more than one directory matches the module name, investigate which one belong
 
 Detect the actual Odoo version before using version-specific frontend APIs or changing localization infrastructure.
 
-Inspect strong evidence such as:
+Inspect the strongest evidence available, such as:
 
 ```text
+target/custom module __manifest__.py version prefix
 odoo/release.py
 odoo/__init__.py
 odoo/version.py
@@ -122,7 +179,19 @@ existing JavaScript imports
 existing frontend APIs
 ```
 
-Prefer direct evidence from the Odoo source code when available.
+A valid module manifest version prefix is acceptable primary evidence when the Odoo core source is not present in the workspace.
+
+Examples:
+
+```text
+17.0.1.0.0 -> Odoo 17
+18.0.2.1.0 -> Odoo 18
+19.0.1.0.0 -> Odoo 19
+```
+
+When Odoo core source is available, use it as stronger confirmation where practical.
+
+Do not reject valid manifest evidence merely because `odoo/release.py` is unavailable.
 
 Record:
 
@@ -154,6 +223,8 @@ If the version cannot be established confidently, report the uncertainty before 
 ---
 
 # 5. Investigate Before Modifying
+
+When repository-native discovery tools are available, prefer them over broad shell scans. Examples may include `find_addon`, `search_code`, targeted `read_file`, or equivalent safe tools. Shell commands and paths shown in this skill are examples, not mandatory tooling.
 
 Before editing localization code or translation files, inspect the target module.
 
@@ -309,12 +380,20 @@ If:
 
 does not exist:
 
-1. Create:
+For **Investigation / Review / Audit / read-only Validation**:
+
+1. do not create the directory;
+2. report that localization infrastructure is missing;
+3. check whether an Arabic PO export already exists elsewhere in the repository or was provided by the user.
+
+For **Implementation / Fix**:
+
+1. create:
    ```text
    <module>/i18n/
    ```
-2. Check whether an Arabic PO export has already been provided elsewhere in the repository or by the user.
-3. Do not invent a translation catalog manually.
+2. check whether an Arabic PO export has already been provided elsewhere in the repository or by the user;
+3. do not invent a translation catalog manually.
 
 Creating the directory does not authorize creating `ar.po` from scratch.
 
@@ -332,14 +411,15 @@ If:
 
 does not exist:
 
-1. Create `i18n/` if necessary.
-2. Do **not** create `ar.po` from scratch.
-3. Do **not** manually generate PO entries.
-4. Do **not** guess source references.
-5. Do **not** reconstruct a complete translation catalog from source files.
-6. Do **not** copy another module's PO file.
-7. Do **not** copy an old unrelated PO export and treat it as authoritative.
-8. Ask the user to export the Arabic translation for the target module from Odoo.
+1. If the current task is read-only, do not create `i18n/`; only report that it is missing.
+2. If the current task is an authorized Implementation / Fix, create `i18n/` if necessary.
+3. Do **not** create `ar.po` from scratch.
+4. Do **not** manually generate PO entries.
+5. Do **not** guess source references.
+6. Do **not** reconstruct a complete translation catalog from source files.
+7. Do **not** copy another module's PO file.
+8. Do **not** copy an old unrelated PO export and treat it as authoritative.
+9. Ask the user to export the Arabic translation for the target module from Odoo.
 
 Tell the user to place the exported file at:
 
@@ -1993,8 +2073,9 @@ If `ar.po` is missing, clearly state:
 ```text
 The module does not currently contain i18n/ar.po.
 
-The i18n directory was created/confirmed, but I will not generate the
-Arabic translation catalog manually.
+The i18n directory was confirmed or, for an authorized implementation task,
+created when necessary. In a read-only review, no directory was created.
+I will not generate the Arabic translation catalog manually.
 
 Please export the Arabic translation for this module from Odoo and place
 the exported file at:
@@ -2147,9 +2228,13 @@ Never:
 START
   |
   v
-Is the module name known?
+Is the module known?
   |
-  +-- No --> Ask the user for the module name.
+  +-- No --> Attempt repository/context discovery.
+  |            |
+  |            +-- One confident target --> Continue.
+  |            |
+  |            +-- Material ambiguity --> Ask the user.
   |
   +-- Yes
         |
@@ -2165,7 +2250,11 @@ Inspect module localization architecture.
         v
 Check <module>/i18n/
         |
-        +-- Missing --> Create i18n/
+        +-- Missing
+        |     |
+        |     +-- Read-only task --> Report only; do not create.
+        |     |
+        |     +-- Implementation/Fix --> Create i18n/ if needed.
         |
         v
 Check <module>/i18n/ar.po
@@ -2244,9 +2333,12 @@ Provide final report.
 ```text
 Investigate first.
 
-Ask for the module if it is unknown.
+Resolve the module from context/repository evidence first.
+Ask only when material ambiguity remains.
 
-Detect the Odoo version from the actual project.
+Preserve the agent's task mode: review/audit is read-only; authorized implementation may continue after investigation.
+
+Detect the Odoo version from the strongest actual project evidence, including a valid manifest version prefix when core source is unavailable.
 
 Never assume frontend APIs are the same across Odoo versions.
 

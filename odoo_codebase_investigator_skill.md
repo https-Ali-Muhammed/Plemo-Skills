@@ -6,9 +6,11 @@ Use this skill to investigate an Odoo codebase before any implementation, modifi
 
 The skill must determine how the repository is structured, which module owns a feature, which modules extend or override it, how XML/QWeb inheritance works, how Python inheritance and controllers connect to the feature, how JavaScript and assets participate, whether an implementation already exists, and where a future change should safely be made.
 
-This skill is investigation-only by default.
+The investigation phase is read-only by default.
 
-Do not modify files, create files, fix issues, implement features, refactor code, update the database, commit, or push during the investigation.
+This skill may run as a standalone investigation/review or as a read-only discovery sub-phase inside an already-authorized implementation task.
+
+Do not modify files, create files, fix issues, implement features, refactor code, update the database, commit, or push during the investigation phase.
 
 Core principles:
 
@@ -19,6 +21,35 @@ Core principles:
 - Trace execution flow.
 - Search for existing implementations.
 - Report before modifying.
+
+## 0. Relationship With Native Agent Capabilities and the User's Original Request
+
+This skill adds Odoo-specific ownership, inheritance, dependency, and execution-flow evidence. It does not replace the agent's native repository discovery, planning, implementation, or task-mode behavior.
+
+Reuse reliable evidence already collected during the current task. Do not repeat another skill's investigation unless the existing evidence is insufficient, stale, or materially incomplete.
+
+Repository-specific instructions such as `plemo.md`, configured addon paths, and reliable native discovery tools take precedence over generic repository-layout examples in this skill.
+
+Use the smallest applicable portion of the skill for the current task. Do not force a full investigation report for a trivial isolated change unless explicitly requested or needed to resolve ownership safely.
+
+Task-mode behavior:
+
+```text
+Investigation / Review / Diagnosis
+    -> remain read-only
+    -> produce the investigation result
+    -> do not implement
+
+Already-authorized Add / Fix / Build / Change / Implement request
+    -> perform investigation as a read-only sub-phase
+    -> the original user request already counts as implementation authorization
+    -> hand the evidence to the agent's native planning process
+    -> continue implementation without asking for a second approval
+```
+
+Ask for additional approval only when the investigation reveals a material scope expansion, destructive action, security/data risk requiring a decision, or another unresolved choice that would make proceeding unsafe.
+
+The skill is an evidence provider, not a second planning or authorization system.
 
 ---
 
@@ -36,9 +67,10 @@ If the target is already clear, do not ask unnecessary questions. If unclear, as
 
 Before making architectural assumptions, determine the Odoo version.
 
-Inspect strong evidence such as:
+Inspect the strongest evidence available, such as:
 
 ```text
+target/custom module __manifest__.py version prefix
 odoo/release.py
 odoo/version.py
 odoo/__init__.py
@@ -51,7 +83,19 @@ existing frontend APIs
 project configuration
 ```
 
-Prefer direct evidence from the Odoo source.
+A valid target/custom module manifest version prefix is acceptable primary evidence when Odoo core source is not available.
+
+Examples:
+
+```text
+17.0.1.0.0 -> Odoo 17
+18.0.2.1.0 -> Odoo 18
+19.0.1.0.0 -> Odoo 19
+```
+
+Use Odoo core source as stronger confirmation when it is available.
+
+Do not reject valid manifest evidence merely because `odoo/release.py` is absent.
 
 Record:
 
@@ -95,6 +139,22 @@ Other configured addon paths:
 
 ---
 
+## 3.1 Repository Discovery Precedence
+
+Use this precedence:
+
+1. repository-specific instructions such as `plemo.md`;
+2. agent-native repository/addon discovery tools;
+3. configured addon paths and manifests;
+4. verified project conventions;
+5. fallback conventions documented in this skill.
+
+The `odoo/Customers/<project_name>/addons/` structure is a known Plemo layout, not a universal requirement.
+
+Never override a repository-specific path documented in `plemo.md` merely because a generic example in this skill uses another layout.
+
+When native tools such as `find_addon`, `search_code`, targeted `read_file`, or equivalents are available, prefer them for focused discovery before broad scans.
+
 ## 4. Custom Project Structure
 
 Customer-specific Odoo projects in this environment normally use:
@@ -121,7 +181,7 @@ Example:
 odoo/Customers/Taverna/addons/
 ```
 
-When a project/customer name is provided, investigate this directory first for project-specific modules.
+When this layout is confirmed for the repository, investigate this directory first for project-specific modules. Otherwise follow the repository-specific layout discovered from `plemo.md`, configured paths, manifests, or native discovery tools.
 
 Do not treat:
 
@@ -187,7 +247,9 @@ Do not search unrelated customer projects unless there is evidence that shared c
 
 ## 7. Feature Ownership Search Order
 
-For a known customer project, use this practical search order:
+For a known customer project, use the repository-specific search order first.
+
+When no repository-specific order is documented and the Plemo customer layout is confirmed, a practical fallback is:
 
 1. `odoo/Customers/<project_name>/addons/`
 2. other configured custom addon paths;
@@ -1203,11 +1265,11 @@ Do not present an unverified runtime assumption as confirmed.
 
 ---
 
-## 56. No Modifications During Investigation
+## 56. No Modifications During the Investigation Phase
 
-This skill is read-only by default.
+The investigation phase is read-only.
 
-Do not:
+Do not during this phase:
 
 - edit files;
 - create files;
@@ -1228,13 +1290,26 @@ Do not:
 - rebase;
 - create PRs.
 
-Implementation should happen only after the report and an explicit user request.
+If the current user request is investigation/review/diagnosis only, stop after the investigation result.
+
+If the current user request already explicitly asks to add, fix, build, change, or implement, the original request already authorizes the later implementation phase. After the read-only investigation handoff, return control to the agent's native planner and continue unless a new material decision requires user input.
+
+Do not require a second implementation approval solely because this skill ran.
 
 ---
 
-## 57. Safe Read-Only Commands
+## 57. Safe Read-Only Tools and Commands
 
-Examples:
+Prefer available repository-native discovery tools such as:
+
+```text
+find_addon
+search_code
+targeted read_file
+equivalent safe repository search/read tools
+```
+
+Shell examples include:
 
 ```text
 find
@@ -1252,13 +1327,15 @@ tree
 ls
 ```
 
-Do not use commands that alter files or repository state.
+These are examples, not a required toolset.
+
+Do not use commands or tools that alter files or repository state during the investigation phase.
 
 ---
 
-## 58. Do Not Modify Even If the Fix Is Obvious
+## 58. Do Not Modify During the Investigation Sub-Phase Even If the Fix Is Obvious
 
-If the investigation reveals an obvious fix, report:
+If the investigation reveals an obvious fix, record:
 
 ```text
 Issue:
@@ -1267,17 +1344,48 @@ Recommended file:
 Recommended change:
 ```
 
-Do not apply it during investigation.
+Do not apply it while the investigation phase is still active.
+
+For an investigation-only request, stop there.
+
+For an already-authorized implementation request, hand this evidence to the agent's native planning process and continue with the implementation phase without asking for duplicate approval, unless the scope materially changed.
 
 ---
 
 # REQUIRED REPORT
 
-## 59. Odoo Codebase Investigation Report
+## 59. Odoo Codebase Investigation Output
 
-Always produce a report before implementation.
+Choose the output depth based on how this skill is being used.
 
-Use this structure:
+### Standalone Investigation / Review
+
+Produce the full investigation report below.
+
+### Investigation Embedded in an Already-Authorized Implementation
+
+Produce a concise evidence handoff sufficient for the agent's native plan. Include at minimum:
+
+```text
+Target:
+Odoo version + evidence:
+Feature owner:
+Relevant modules:
+Relevant files:
+Inheritance/override chain:
+Dependency concerns:
+Execution flow:
+Existing implementation found:
+Recommended safe modification boundary:
+Do-not-touch areas:
+Runtime/database unknowns:
+```
+
+Do not force the full 21-section user-facing report when the task is simple and the evidence handoff is sufficient.
+
+For complex/high-risk changes, use the full structure even when investigation is embedded in implementation.
+
+Full report structure:
 
 ### 1. Investigation Target
 
@@ -1637,13 +1745,15 @@ Investigate before modifying.
 
 Understand repository structure before analyzing one file.
 
-For customer projects, start with:
+For customer projects, follow repository-specific guidance such as `plemo.md` and configured addon paths first.
+
+When the Plemo customer layout is actually present, this is a useful fallback:
 
 ```text
 odoo/Customers/<project_name>/addons/
 ```
 
-but always trace features back to their original owners.
+Always trace features back to their original owners.
 
 Read manifests and build dependency relationships.
 
@@ -1684,6 +1794,8 @@ For assets:
 
 Search the relevant codebase for an existing implementation before recommending new code.
 
-Do not modify anything during investigation.
+Do not modify anything during the investigation phase.
 
-Always produce the investigation report first.
+For standalone investigation, produce the full report. For an embedded implementation investigation, produce the appropriate evidence handoff and return control to the agent's native planner.
+
+Do not require duplicate implementation approval when the user's original request already authorized the change.
