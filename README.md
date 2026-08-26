@@ -36,6 +36,12 @@ A post-implementation Odoo validation skill that proves what actually works afte
 
 A deep Odoo security specialist for reviewing effective access across ACLs, record rules, groups and implied groups, field-level restrictions, `sudo()` and execution-user changes, controllers/RPC, portal/public routes, multi-company and multi-website isolation, tokens, attachments, reports/exports, automation users, secrets, and integration endpoints. It builds actor and access-path evidence, identifies privilege-escalation and data-leak paths, separates severity from confidence, recommends the smallest safe server-side enforcement boundary, and hands fixes back to Plemo's native planner rather than replacing it.
 
+### 6. Odoo Upgrade & Migration Analyzer
+
+**File:** `odoo_upgrade_migration_analyzer_skill.md`
+
+An Odoo upgrade and migration specialist for determining how schema, stored-compute, Selection, XML ID, `noupdate`, dependency, configuration, and major-version changes affect installed databases and existing production data. It separates fresh installation from existing-database upgrade behavior, identifies required migration scripts and data mappings, analyzes recomputation, legacy-data, performance, downtime, and rollback risk, and produces structured migration evidence for Plemo's native planner without replacing the agent's deployment or implementation workflow.
+
 ## Skill Interaction Model
 
 ```text
@@ -46,6 +52,8 @@ Agent native discovery + task mode
 Codebase / localization evidence
         ↓
 Feature impact evidence when material
+        ↓
+Odoo Upgrade & Migration Analyzer when persistence/upgrade risk exists
         ↓
 Odoo Security & Access Reviewer when security-sensitive
         ↓
@@ -71,6 +79,8 @@ General rules:
 - Production validation should prefer read-only/reversible observation and must not perform destructive or business-impacting actions without the authorization required by the project workflow.
 - Security-sensitive changes should be reviewed by actor, access path, and effective server-side enforcement; UI visibility alone is not treated as security.
 - `sudo()` is treated as a privileged bypass that requires explicit justification, narrow scope, and authorization of user-controlled records.
+- Upgrade-sensitive changes must distinguish fresh installation from existing-database upgrade behavior and treat existing production data as part of the compatibility contract.
+- Migration analysis must identify data mappings, recomputation, XML ID/`noupdate` behavior, rollback limitations, and runtime upgrade verification without replacing Plemo's native deployment planning.
 
 ## Repository Structure
 
@@ -81,5 +91,6 @@ Plemo-Skills/
 ├── odoo_codebase_investigator_skill.md
 ├── odoo_feature_impact_analyzer_skill.md
 ├── odoo_regression_runtime_validator_skill.md
-└── odoo_security_access_reviewer_skill.md
+├── odoo_security_access_reviewer_skill.md
+└── odoo_upgrade_migration_analyzer_skill.md
 ```
