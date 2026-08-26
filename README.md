@@ -30,6 +30,12 @@ An Odoo-specific change-impact discovery skill for material changes. It analyzes
 
 A post-implementation Odoo validation skill that proves what actually works after a change. It reuses existing investigation and impact evidence, validates the final diff, separates static checks from runtime/browser/security/integration proof, distinguishes fresh install from module upgrade and existing-data behavior, selects regression tests from the real impact surface, protects production from unsafe validation actions, and reports explicit `PASS`, `FAIL`, `PARTIAL`, or `BLOCKED` results without replacing Plemo's native planning, implementation, or debugging workflow.
 
+### 5. Odoo Security & Access Reviewer
+
+**File:** `odoo_security_access_reviewer_skill.md`
+
+A deep Odoo security specialist for reviewing effective access across ACLs, record rules, groups and implied groups, field-level restrictions, `sudo()` and execution-user changes, controllers/RPC, portal/public routes, multi-company and multi-website isolation, tokens, attachments, reports/exports, automation users, secrets, and integration endpoints. It builds actor and access-path evidence, identifies privilege-escalation and data-leak paths, separates severity from confidence, recommends the smallest safe server-side enforcement boundary, and hands fixes back to Plemo's native planner rather than replacing it.
+
 ## Skill Interaction Model
 
 ```text
@@ -40,6 +46,8 @@ Agent native discovery + task mode
 Codebase / localization evidence
         ↓
 Feature impact evidence when material
+        ↓
+Odoo Security & Access Reviewer when security-sensitive
         ↓
 Agent native planning
         ↓
@@ -61,6 +69,8 @@ General rules:
 - A valid Odoo module manifest version prefix may be used as version evidence when Odoo core source is unavailable.
 - Validation must distinguish static evidence from actual runtime proof; an unavailable required runtime check must never be reported as passed.
 - Production validation should prefer read-only/reversible observation and must not perform destructive or business-impacting actions without the authorization required by the project workflow.
+- Security-sensitive changes should be reviewed by actor, access path, and effective server-side enforcement; UI visibility alone is not treated as security.
+- `sudo()` is treated as a privileged bypass that requires explicit justification, narrow scope, and authorization of user-controlled records.
 
 ## Repository Structure
 
@@ -70,5 +80,6 @@ Plemo-Skills/
 ├── odoo_localization_arabic_qa_skill.md
 ├── odoo_codebase_investigator_skill.md
 ├── odoo_feature_impact_analyzer_skill.md
-└── odoo_regression_runtime_validator_skill.md
+├── odoo_regression_runtime_validator_skill.md
+└── odoo_security_access_reviewer_skill.md
 ```
