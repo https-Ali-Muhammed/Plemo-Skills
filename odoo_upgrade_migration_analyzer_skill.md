@@ -1,10 +1,10 @@
-# Odoo Upgrade & Migration Analyzer
+# Odoo Upgrade/migration analysis
 
 ## Purpose
 
-Use this skill to analyze how an Odoo code or data-model change affects an already installed database and whether migration, backfill, recomputation, compatibility handling, rollout safeguards, or rollback preparation is required.
+Use this guidance to analyze how an Odoo code or data-model change affects an already installed database and whether migration, backfill, recomputation, compatibility handling, rollout safeguards, or rollback preparation is required.
 
-This is an Odoo-specific **upgrade and migration evidence skill**. It does not replace Plemo's native repository discovery, planning, implementation, deployment, debugging, or general validation workflow.
+This is Odoo-specific **upgrade and migration evidence guidance**. It does not replace Plemo's native repository discovery, planning, implementation, deployment, debugging, or general validation workflow.
 
 Core question:
 
@@ -27,16 +27,16 @@ Core principles:
 
 ## 0. Native Agent Compatibility and Scope
 
-This skill extends Plemo; it does not override it.
+This guidance extends Plemo; it does not override it.
 
-Repository-specific instructions such as `plemo.md`, customer rules, migration conventions, deployment conventions, module-versioning rules, and available Plemo tools take precedence over generic examples in this skill.
+Repository-specific instructions such as `plemo.md`, customer rules, migration conventions, deployment conventions, module-versioning rules, and available Plemo tools take precedence over generic examples in this guidance.
 
 Reuse reliable evidence already collected from:
 
-- Odoo Codebase Investigator
-- Odoo Feature Impact Analyzer
-- Odoo Security & Access Reviewer
-- Odoo Regression & Runtime Validator
+- existing codebase-investigation evidence
+- existing feature-impact evidence
+- security and access analysis
+- broader regression and runtime validation
 - current Git diff
 - existing migration scripts
 - runtime/build logs
@@ -44,30 +44,30 @@ Reuse reliable evidence already collected from:
 
 Do not repeat a full investigation when existing evidence is sufficient.
 
-### 0.1 Relationship With Other Plemo Skills
+### 0.1 Relationship With Native Workflow and Existing Evidence
 
 ```text
-Codebase Investigator
+Existing codebase investigation
     "What exists?"
         ↓
-Feature Impact Analyzer
+feature-impact analysis
     "What could this change affect?"
         ↓
-Upgrade & Migration Analyzer
+Upgrade/migration analysis
     "What happens to installed databases and existing data?"
         ↓
-Security & Access Reviewer
+Relevant security/access analysis
     "Is the security boundary safe?" when relevant
         ↓
 Plemo native planning
         ↓
 Plemo native implementation
         ↓
-Regression & Runtime Validator
+Broader regression/runtime validation
     "What can we prove works after implementation?"
 ```
 
-This skill provides migration evidence to Plemo's native planner and exact upgrade scenarios to Skill 4 after implementation.
+This guidance provides migration evidence to Plemo's native planner and exact upgrade scenarios to broader regression and runtime validation after implementation.
 
 Do not create a second generic implementation or deployment plan.
 
@@ -92,7 +92,7 @@ For an already-authorized fix or implementation:
 
 - the original request is sufficient authorization for the requested scope;
 - do not ask for a second approval merely because migration analysis finished;
-- hand migration evidence to Plemo's native planner;
+- continue into Plemo's native planning process using the migration evidence;
 - request new resolution only for destructive/irreversible data operations, material scope expansion, production-only transformations, migration strategy decisions, or rollback limitations that require a user/business choice.
 
 ### 0.3 Migration Materiality Gate
@@ -1052,7 +1052,7 @@ Separate pre-existing noise from migration-caused failures.
 
 ## 65. Security During Migration
 
-If migration changes ACLs, rules, groups, ownership, company data, portal access, tokens, or secrets, hand the security-specific analysis to Skill 5 where material.
+If migration changes ACLs, rules, groups, ownership, company data, portal access, tokens, or secrets, apply the relevant security and access checks where material.
 
 A correct data transformation can still create a security regression.
 
@@ -1233,13 +1233,13 @@ Rollback:
 
 Do not force a full migration report on trivial changes.
 
-## 75. Handoff to Plemo Native Planner
+## 75. Integration With Native Planning
 
 For an authorized implementation provide concise `MIGRATION EVIDENCE`, then return control to the native planner.
 
 Do not require duplicate approval and do not generate another generic implementation plan.
 
-## 76. Handoff to Regression & Runtime Validator
+## 76. Post-Implementation Validation Requirements
 
 After implementation provide exact runtime scenarios, such as:
 
@@ -1253,7 +1253,7 @@ verify customer configuration preserved
 verify critical totals reconciled
 ```
 
-Skill 4 owns the broader PASS/FAIL/PARTIAL/BLOCKED result.
+The broader post-change validation phase owns the final PASS/FAIL/PARTIAL/BLOCKED result.
 
 ## 77. Final Recheck
 
@@ -1337,9 +1337,9 @@ Produce MIGRATION EVIDENCE
        ↓
 Analysis-only?
        ├─ Yes → stop
-       └─ No → hand evidence to Plemo native planner
+       └─ No → continue into Plemo native planning using the evidence
        ↓
-After implementation → hand upgrade scenarios to Skill 4
+After implementation → carry upgrade scenarios into broader post-change runtime validation
 ```
 
 ## 80. Primary Rules to Always Remember
@@ -1405,5 +1405,5 @@ measure or state uncertainty.
 Output migration evidence, not a second generic implementation plan.
 
 After implementation:
-use Odoo Regression & Runtime Validator to prove the upgrade path.
+perform broader post-change regression/runtime validation to prove the upgrade path.
 ```

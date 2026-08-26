@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Use this skill to validate an Odoo change after implementation and determine, with evidence, whether the requested behavior works and whether relevant existing behavior still works.
+Use this guidance to validate an Odoo change after implementation and determine, with evidence, whether the requested behavior works and whether relevant existing behavior still works.
 
-The skill must validate only what the change and its impact evidence justify. It must distinguish static validation from runtime validation, feature verification from regression verification, fresh installation from module upgrade, repository correctness from database/runtime correctness, and confirmed results from unverified assumptions.
+The analysis must validate only what the change and its impact evidence justify. It must distinguish static validation from runtime validation, feature verification from regression verification, fresh installation from module upgrade, repository correctness from database/runtime correctness, and confirmed results from unverified assumptions.
 
-This skill is a **validation and evidence skill**.
+This is **validation and evidence guidance**.
 
 It does not replace the agent's native planning, implementation, debugging, or fix workflow.
 
@@ -36,11 +36,11 @@ Core principles:
 
 ---
 
-# 0. Native Agent Compatibility and Skill Scope
+# 0. Native Agent Compatibility and Guidance Scope
 
-This skill extends Plemo's existing agent capabilities. It does not replace them.
+This guidance extends Plemo's existing agent capabilities. It does not replace them.
 
-The agent already performs native repository discovery, planning, implementation, targeted checks, final diff review, and ordinary debugging. This skill must not create a second generic planning system or a second implementation workflow.
+The agent already performs native repository discovery, planning, implementation, targeted checks, final diff review, and ordinary debugging. this guidance must not create a second generic planning system or a second implementation workflow.
 
 Repository-specific instructions such as:
 
@@ -53,14 +53,14 @@ deployment conventions
 available Plemo tools
 ```
 
-take precedence over generic examples in this skill.
+take precedence over generic examples in this guidance.
 
 When reliable evidence already exists from:
 
 ```text
-Odoo Codebase Investigator
-Odoo Feature Impact Analyzer
-Odoo Localization & Arabic QA
+existing codebase-investigation evidence
+existing feature-impact evidence
+localization and Arabic QA guidance
 the current implementation task
 the current Git diff
 existing test output
@@ -68,32 +68,32 @@ existing test output
 
 reuse it.
 
-Do not repeat a full investigation merely because this skill is activated.
+Do not repeat a full investigation merely because this guidance is activated.
 
-Use the smallest applicable part of this skill for the actual change.
+Use the smallest applicable part of this guidance for the actual change.
 
 ---
 
-## 0.1 Relationship With the Previous Skills
+## 0.1 Relationship With Native Workflow and Existing Evidence
 
 The intended separation is:
 
 ```text
-Odoo Codebase Investigator
+existing codebase-investigation evidence
     "What exists and how does it work?"
         ↓
-Odoo Feature Impact Analyzer
+existing feature-impact evidence
     "What depends on this and what could break?"
         ↓
 Agent native planning
         ↓
 Agent native implementation
         ↓
-Odoo Regression & Runtime Validator
+broader regression and runtime validation
     "What can we now prove works, and what remains unverified?"
 ```
 
-This skill should consume the Feature Impact Analyzer's structured evidence when available.
+This guidance should consume the feature-impact analysis's structured evidence when available.
 
 Useful inputs include:
 
@@ -143,8 +143,8 @@ For **Validation / Test / Review only**:
 
 For **Fix + Validate** or **Implement + Validate**:
 
-- this skill owns the validation phase only;
-- if validation fails, hand the failure evidence to the agent's native planning/debugging process;
+- this guidance owns the validation phase only;
+- if validation fails, continue into the agent's native planning/debugging process using the failure evidence;
 - the original user request already authorizes the requested fix/implementation;
 - do not ask for a second approval solely because validation found a defect;
 - after the agent fixes the defect, rerun the failed validation and any tests whose assumptions changed.
@@ -869,18 +869,18 @@ Do not execute migrations against production during ordinary validation.
 
 ---
 
-# 26. Localization Validation Handoff
+# 26. Localization Validation Integration
 
-When the change includes Arabic localization, use the specialized Odoo Localization & Arabic QA skill for localization-specific checks.
+When the change includes Arabic localization, apply the relevant localization and Arabic QA checks.
 
-This validator should still confirm high-level regression facts such as:
+The validation phase should still confirm high-level regression facts such as:
 
 - modified PO/JS localization files are in the intended scope;
 - no unrelated business logic changed;
 - relevant assets still load;
 - English and Arabic paths are included in runtime validation when required.
 
-Do not duplicate the full localization skill unnecessarily.
+Do not duplicate localization analysis unnecessarily.
 
 ---
 
@@ -1976,7 +1976,7 @@ If the user asked only to validate/review/test:
 - recommend the next investigation/fix boundary;
 - preserve evidence.
 
-The validator should not mutate into an implementation skill.
+The validation phase should not mutate into an implementation workflow.
 
 ---
 
@@ -2436,7 +2436,7 @@ If runtime proof is required:
 - provide the precise required check/environment;
 - do not claim success.
 
-This is a primary purpose of this skill.
+This is a primary purpose of this guidance.
 
 ---
 
@@ -2548,7 +2548,7 @@ Integration environment:
 
 ## 4. Impact Evidence Reused
 
-Summarize the relevant regression and runtime requirements from Skill 3.
+Summarize the relevant regression and runtime requirements already identified during impact analysis.
 
 ## 5. Static Validation
 
@@ -2563,7 +2563,7 @@ List:
 - assets;
 - security;
 - migration;
-- localization handoff.
+- localization evidence.
 
 ## 6. Install / Upgrade Validation
 
@@ -2762,7 +2762,7 @@ What is the task mode?
   |      -> do not edit code
   |
   +-- Fix/Implement + Validate
-         -> validator owns validation phase only
+         -> validation phase owns validation work only
   |
   v
 Read plemo.md / repository guidance.
@@ -2846,7 +2846,7 @@ Any change-caused required failure?
   |      |
   |      +-- Validation-only -> FAIL and report
   |      |
-  |      +-- Fix authorized -> hand evidence to native planner,
+  |      +-- Fix authorized -> continue into native planning using failure evidence,
   |                            fix, then revalidate
   |
   v
@@ -2870,7 +2870,7 @@ Produce Validation Evidence.
 ```text
 Validate the actual final change.
 
-Reuse Codebase Investigator and Feature Impact Analyzer evidence.
+Reuse existing codebase-investigation and feature-impact evidence.
 
 Do not replace the agent's native planning or implementation.
 

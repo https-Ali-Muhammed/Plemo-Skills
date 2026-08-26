@@ -2,13 +2,13 @@
 
 ## Purpose
 
-Use this skill to investigate an Odoo codebase before any implementation, modification, or architectural decision.
+Use this guidance to investigate an Odoo codebase before any implementation, modification, or architectural decision.
 
-The skill must determine how the repository is structured, which module owns a feature, which modules extend or override it, how XML/QWeb inheritance works, how Python inheritance and controllers connect to the feature, how JavaScript and assets participate, whether an implementation already exists, and where a future change should safely be made.
+The analysis must determine how the repository is structured, which module owns a feature, which modules extend or override it, how XML/QWeb inheritance works, how Python inheritance and controllers connect to the feature, how JavaScript and assets participate, whether an implementation already exists, and where a future change should safely be made.
 
 The investigation phase is read-only by default.
 
-This skill may run as a standalone investigation/review or as a read-only discovery sub-phase inside an already-authorized implementation task.
+This guidance may run as a standalone investigation/review or as a read-only discovery sub-phase inside an already-authorized implementation task.
 
 Do not modify files, create files, fix issues, implement features, refactor code, update the database, commit, or push during the investigation phase.
 
@@ -24,13 +24,13 @@ Core principles:
 
 ## 0. Relationship With Native Agent Capabilities and the User's Original Request
 
-This skill adds Odoo-specific ownership, inheritance, dependency, and execution-flow evidence. It does not replace the agent's native repository discovery, planning, implementation, or task-mode behavior.
+This guidance adds Odoo-specific ownership, inheritance, dependency, and execution-flow evidence. It does not replace the agent's native repository discovery, planning, implementation, or task-mode behavior.
 
-Reuse reliable evidence already collected during the current task. Do not repeat another skill's investigation unless the existing evidence is insufficient, stale, or materially incomplete.
+Reuse reliable evidence already collected during the current task. Do not repeat previously collected investigation evidence unless the existing evidence is insufficient, stale, or materially incomplete.
 
-Repository-specific instructions such as `plemo.md`, configured addon paths, and reliable native discovery tools take precedence over generic repository-layout examples in this skill.
+Repository-specific instructions such as `plemo.md`, configured addon paths, and reliable native discovery tools take precedence over generic repository-layout examples in this guidance.
 
-Use the smallest applicable portion of the skill for the current task. Do not force a full investigation report for a trivial isolated change unless explicitly requested or needed to resolve ownership safely.
+Use the smallest applicable portion of this guidance for the current task. Do not force a full investigation report for a trivial isolated change unless explicitly requested or needed to resolve ownership safely.
 
 Task-mode behavior:
 
@@ -43,13 +43,13 @@ Investigation / Review / Diagnosis
 Already-authorized Add / Fix / Build / Change / Implement request
     -> perform investigation as a read-only sub-phase
     -> the original user request already counts as implementation authorization
-    -> hand the evidence to the agent's native planning process
+    -> continue into the agent's native planning process using the collected evidence
     -> continue implementation without asking for a second approval
 ```
 
 Ask for additional approval only when the investigation reveals a material scope expansion, destructive action, security/data risk requiring a decision, or another unresolved choice that would make proceeding unsafe.
 
-The skill is an evidence provider, not a second planning or authorization system.
+The guidance is an evidence provider, not a second planning or authorization system.
 
 ---
 
@@ -147,11 +147,11 @@ Use this precedence:
 2. agent-native repository/addon discovery tools;
 3. configured addon paths and manifests;
 4. verified project conventions;
-5. fallback conventions documented in this skill.
+5. fallback conventions documented in this guidance.
 
 The `odoo/Customers/<project_name>/addons/` structure is a known Plemo layout, not a universal requirement.
 
-Never override a repository-specific path documented in `plemo.md` merely because a generic example in this skill uses another layout.
+Never override a repository-specific path documented in `plemo.md` merely because a generic example in this guidance uses another layout.
 
 When native tools such as `find_addon`, `search_code`, targeted `read_file`, or equivalents are available, prefer them for focused discovery before broad scans.
 
@@ -1292,9 +1292,9 @@ Do not during this phase:
 
 If the current user request is investigation/review/diagnosis only, stop after the investigation result.
 
-If the current user request already explicitly asks to add, fix, build, change, or implement, the original request already authorizes the later implementation phase. After the read-only investigation handoff, return control to the agent's native planner and continue unless a new material decision requires user input.
+If the current user request already explicitly asks to add, fix, build, change, or implement, the original request already authorizes the later implementation phase. After the read-only investigation phase, continue into native planning using the collected evidence unless a new material decision requires user input.
 
-Do not require a second implementation approval solely because this skill ran.
+Do not require a second implementation approval solely because this guidance ran.
 
 ---
 
@@ -1348,7 +1348,7 @@ Do not apply it while the investigation phase is still active.
 
 For an investigation-only request, stop there.
 
-For an already-authorized implementation request, hand this evidence to the agent's native planning process and continue with the implementation phase without asking for duplicate approval, unless the scope materially changed.
+For an already-authorized implementation request, continue into the agent's native planning process using this evidence and proceed with implementation without asking for duplicate approval, unless the scope materially changed.
 
 ---
 
@@ -1356,7 +1356,7 @@ For an already-authorized implementation request, hand this evidence to the agen
 
 ## 59. Odoo Codebase Investigation Output
 
-Choose the output depth based on how this skill is being used.
+Choose the output depth based on how this guidance is being used.
 
 ### Standalone Investigation / Review
 
@@ -1364,7 +1364,7 @@ Produce the full investigation report below.
 
 ### Investigation Embedded in an Already-Authorized Implementation
 
-Produce a concise evidence handoff sufficient for the agent's native plan. Include at minimum:
+Produce a concise evidence summary sufficient for the agent's native plan. Include at minimum:
 
 ```text
 Target:
@@ -1381,7 +1381,7 @@ Do-not-touch areas:
 Runtime/database unknowns:
 ```
 
-Do not force the full 21-section user-facing report when the task is simple and the evidence handoff is sufficient.
+Do not force the full 21-section user-facing report when the task is simple and the evidence summary is sufficient.
 
 For complex/high-risk changes, use the full structure even when investigation is embedded in implementation.
 
@@ -1796,6 +1796,6 @@ Search the relevant codebase for an existing implementation before recommending 
 
 Do not modify anything during the investigation phase.
 
-For standalone investigation, produce the full report. For an embedded implementation investigation, produce the appropriate evidence handoff and return control to the agent's native planner.
+For standalone investigation, produce the full report. For an embedded implementation investigation, produce the appropriate evidence summary and continue into the agent's native planning process.
 
 Do not require duplicate implementation approval when the user's original request already authorized the change.

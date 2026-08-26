@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Use this skill to analyze the impact of a requested Odoo feature, enhancement, bug fix, behavioral change, refactor, or technical modification before implementation.
+Use this guidance to analyze the impact of a requested Odoo feature, enhancement, bug fix, behavioral change, refactor, or technical modification before implementation.
 
-The skill must determine what existing implementation the request touches, which modules and layers are affected, what direct and indirect dependencies exist, what runtime behavior may change, what regressions are possible, what upgrade or data-migration consequences may exist, and where the smallest safe implementation boundary should be.
+The analysis must determine what existing implementation the request touches, which modules and layers are affected, what direct and indirect dependencies exist, what runtime behavior may change, what regressions are possible, what upgrade or data-migration consequences may exist, and where the smallest safe implementation boundary should be.
 
-This skill performs Odoo-specific change-impact discovery and regression-evidence analysis by default.
+This guidance performs Odoo-specific change-impact discovery and regression-evidence analysis by default.
 
 It does not replace the agent's native implementation planning.
 
@@ -27,15 +27,15 @@ Core principles:
 
 ---
 
-## 0. Relationship With Native Agent Capabilities and Other Skills
+## 0. Relationship With Native Workflow and Existing Evidence
 
-This skill adds Odoo-specific impact evidence, reverse-dependency discovery, regression requirements, upgrade/data consequences, runtime-verification requirements, constraints, and safe implementation boundaries.
+This guidance adds Odoo-specific impact evidence, reverse-dependency discovery, regression requirements, upgrade/data consequences, runtime-verification requirements, constraints, and safe implementation boundaries.
 
 It does not replace the agent's native repository discovery, implementation planning, implementation, or task-mode behavior.
 
-Reuse reliable evidence already collected by the Odoo Codebase Investigator or another skill during the current task. Do not repeat investigation unless that evidence is insufficient, stale, or does not cover the changed surface.
+Reuse reliable codebase-investigation or other relevant evidence already collected during the current task. Do not repeat investigation unless that evidence is insufficient, stale, or does not cover the changed surface.
 
-Repository-specific instructions such as `plemo.md`, configured addon paths, and reliable native discovery tools take precedence over generic repository-layout examples in this skill.
+Repository-specific instructions such as `plemo.md`, configured addon paths, and reliable native discovery tools take precedence over generic repository-layout examples in this guidance.
 
 If the user's current request is analysis/review only:
 
@@ -47,15 +47,15 @@ If the user's current request already explicitly asks to add, fix, build, change
 
 - perform impact analysis as a read-only sub-phase;
 - the original request already counts as implementation authorization;
-- hand the evidence to the agent's native planning process;
+- continue into the agent's native planning process using the collected evidence;
 - continue implementation without asking for a second approval;
 - ask only if the impact analysis reveals a material scope change, destructive action, or unresolved decision that makes proceeding unsafe.
 
-The skill is an evidence provider, not a second planning or authorization system.
+The guidance is an evidence provider, not a second planning or authorization system.
 
 ## 0.1 Materiality Gate
 
-Use the full Feature Impact Analyzer for **material changes**.
+Use the full feature-impact analysis for **material changes**.
 
 Material changes include, for example:
 
@@ -82,7 +82,7 @@ Material changes include, for example:
 
 For trivial isolated non-behavioral changes such as obvious text corrections, comments, or local formatting fixes, do not force the full impact workflow unless explicitly requested or needed to resolve ownership/safety.
 
-Use the smallest applicable portion of the skill for the actual risk.
+Use the smallest applicable portion of this guidance for the actual risk.
 
 ## 1. Determine the Requested Change
 
@@ -138,11 +138,11 @@ Do not begin impact analysis from a vague phrase when the surrounding code or re
 
 ---
 
-## 2. Relationship With the Odoo Codebase Investigator
+## 2. Relationship With Existing Investigation Evidence
 
-This skill is not a replacement for the Odoo Codebase Investigator.
+This guidance is not a replacement for the existing codebase-investigation evidence.
 
-The Codebase Investigator answers questions such as:
+Existing codebase investigation should answer questions such as:
 
 ```text
 Where is the feature implemented?
@@ -151,7 +151,7 @@ What inherits or overrides it?
 How does the feature execute end-to-end?
 ```
 
-The Feature Impact Analyzer answers:
+The feature-impact analysis answers:
 
 ```text
 If we change this feature, what else can be affected?
@@ -194,11 +194,11 @@ For a material change, follow this sequence:
 19. Identify candidate safe implementation boundaries and unsafe boundaries.
 20. Recommend the smallest safe implementation boundary.
 21. Define required static/runtime validation evidence.
-22. Produce the Impact Evidence handoff and, when appropriate, the detailed Feature Impact Analysis Report.
+22. Produce the Impact Evidence summary and, when appropriate, the detailed Feature Impact Analysis Report.
 23. If the task is analysis-only, stop.
 24. If implementation was already authorized by the user's original request, return control to the agent's native planner and continue unless a new material decision requires user input.
 
-Do not create a second generic implementation plan inside this skill.
+Do not create a second generic implementation plan inside this guidance.
 
 ---
 
@@ -1876,11 +1876,11 @@ For any version-sensitive API, field, import, hook, registry, controller behavio
 1. detect the project's Odoo version from the strongest available evidence;
 2. verify the API against available source/evidence for that version;
 3. search current repository usage;
-4. consult repository-specific Plemo lessons/skills when available;
+4. consult repository-specific Plemo guidance when available;
 5. do not import a pattern solely because it exists in another Odoo version;
 6. report unresolved version assumptions explicitly.
 
-Do not maintain a giant hardcoded compatibility table inside this skill unless the project provides one as a maintained source of truth.
+Do not maintain a giant hardcoded compatibility table inside this guidance unless the project provides one as a maintained source of truth.
 
 Record:
 
@@ -2408,7 +2408,7 @@ Do not during impact analysis:
 
 If the current request is analysis/review only, stop after the impact output.
 
-If the current request already explicitly authorizes add/fix/build/change/implementation, that original request is sufficient authorization for the later implementation phase. Hand the impact evidence to the native planner and continue unless a newly discovered material decision requires user input.
+If the current request already explicitly authorizes add/fix/build/change/implementation, that original request is sufficient authorization for the later implementation phase. Continue into native planning using the impact evidence unless a newly discovered material decision requires user input.
 
 Do not require duplicate implementation approval.
 
@@ -2454,7 +2454,7 @@ Do not apply the change while impact analysis is active.
 
 For analysis-only tasks, stop there.
 
-For already-authorized implementation tasks, hand the evidence to the native planner and continue after the impact sub-phase.
+For already-authorized implementation tasks, continue into native planning using the evidence after the impact sub-phase.
 
 For trivial isolated non-behavioral changes excluded by the Materiality Gate, do not force this full output.
 
@@ -2472,7 +2472,7 @@ If a shared module would broaden blast radius, prefer a customer-specific extens
 
 # REQUIRED REPORT
 
-## 97. Impact Evidence Handoff and Detailed Report
+## 97. Impact Evidence Summary and Detailed Report
 
 For every material change, produce a compact structured **Impact Evidence** block first.
 
@@ -3182,7 +3182,7 @@ Is the current request analysis/review only?
         +-- No, implementation already authorized
               |
               v
-        Hand evidence to native planner.
+        Continue into native planning using the evidence.
               |
               v
         Continue unless a new material decision requires user input.
@@ -3197,7 +3197,7 @@ Analyze before implementing.
 
 Understand the current feature before predicting impact.
 
-Reuse the Codebase Investigator when reliable evidence already exists.
+Reuse reliable codebase-investigation evidence when it already exists.
 
 For customer projects, follow repository-specific guidance such as `plemo.md` and configured addon paths first.
 
@@ -3256,9 +3256,9 @@ Prefer the smallest safe extension.
 
 Do not modify anything during the impact-analysis phase.
 
-Produce the Impact Evidence handoff before implementation.
+Produce the Impact Evidence summary before implementation.
 
 Do not replace the agent's native implementation plan.
 
-If the user's original request already authorizes implementation, do not ask for a second approval solely because this skill ran.
+If the user's original request already authorizes implementation, do not ask for a second approval solely because this guidance ran.
 ```

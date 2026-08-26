@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Use this skill to perform a deep Odoo-specific security and access review of a model, feature, workflow, controller, route, portal/website flow, integration surface, or implemented change.
+Use this guidance to perform a deep Odoo-specific security and access review of a model, feature, workflow, controller, route, portal/website flow, integration surface, or implemented change.
 
-The skill must determine:
+The analysis must determine:
 
 - what data or operation is being protected;
 - which users or systems can reach it;
@@ -13,7 +13,7 @@ The skill must determine:
 - whether security rules are correct in both repository design and relevant runtime contexts;
 - what must be changed or validated before the security model can be considered safe.
 
-This is a **specialized Odoo security evidence and review skill**.
+This is **specialized Odoo security evidence and review guidance**.
 
 It does not replace Plemo's native repository discovery, planning, implementation, debugging, or general regression workflow.
 
@@ -42,9 +42,9 @@ Core principles:
 
 ---
 
-# 0. Native Agent Compatibility and Skill Scope
+# 0. Native Agent Compatibility and Guidance Scope
 
-This skill extends Plemo's existing Odoo capabilities. It does not replace them.
+This guidance extends Plemo's existing Odoo capabilities. It does not replace them.
 
 Plemo already performs:
 
@@ -59,7 +59,7 @@ targeted validation
 final diff review
 ```
 
-This skill adds security-specific procedures, evidence, and guardrails.
+This guidance adds security-specific procedures, evidence, and guardrails.
 
 Repository-specific instructions such as:
 
@@ -72,14 +72,14 @@ deployment conventions
 available Plemo tools
 ```
 
-take precedence over generic examples in this skill.
+take precedence over generic examples in this guidance.
 
 Reuse reliable evidence already collected from:
 
 ```text
-Odoo Codebase Investigator
-Odoo Feature Impact Analyzer
-Odoo Regression & Runtime Validator
+existing codebase-investigation evidence
+existing feature-impact evidence
+broader regression and runtime validation
 current task investigation
 current Git diff
 existing tests
@@ -92,35 +92,35 @@ Use the smallest security-review depth justified by the actual security surface.
 
 ---
 
-## 0.1 Relationship With the Other Plemo Skills
+## 0.1 Relationship With Native Workflow and Existing Evidence
 
 The intended division of responsibility is:
 
 ```text
-Odoo Codebase Investigator
+existing codebase-investigation evidence
     "Where is the feature and how does it work?"
         ↓
-Odoo Feature Impact Analyzer
+existing feature-impact evidence
     "What could this change affect?"
         ↓
-Odoo Security & Access Reviewer
+security and access analysis
     "Is the security model safe and correctly enforced?"
         ↓
 Plemo native planning
         ↓
 Plemo native implementation
         ↓
-Odoo Regression & Runtime Validator
+broader regression and runtime validation
     "What can we prove works after implementation?"
 ```
 
-The Security Reviewer may also be used as a standalone audit after implementation.
+The same security procedures may also be applied as a standalone audit after implementation.
 
-When Skill 4 already has a security runtime matrix, reuse it.
+When a security runtime matrix already exists for the task, reuse it.
 
-When this skill identifies security-specific runtime requirements, hand them to Skill 4 for broader post-change validation when appropriate.
+When security-specific runtime requirements are identified, carry them into broader post-change validation when appropriate.
 
-Do not duplicate the entire Regression & Runtime Validator.
+Do not duplicate broader regression/runtime validation.
 
 ---
 
@@ -147,22 +147,22 @@ For **Security review / audit / diagnosis only**:
 
 For **Fix security issue** or **Implement security-sensitive feature**:
 
-- this skill owns the security evidence phase;
+- this guidance owns the security evidence phase;
 - the original user request already counts as authorization for the requested fix/implementation;
 - do not ask for a second approval merely because the security review finished;
-- hand the security evidence to Plemo's native planner;
+- continue into Plemo's native planning process using the security evidence;
 - continue unless the review reveals a material scope expansion, destructive operation, migration decision, production-only security change, or another unresolved decision that makes proceeding unsafe.
 
 For **Validate a security fix**:
 
 - perform security-specific validation;
-- reuse Skill 4 when broader regression/runtime coverage is needed.
+- reuse existing regression/runtime evidence when broader coverage is needed.
 
 ---
 
 ## 0.3 Security Review Activation Gate
 
-Use this skill when the task involves or may materially affect:
+Use this guidance when the task involves or may materially affect:
 
 - new models;
 - ACLs;
@@ -281,7 +281,7 @@ upgrade_module
 equivalent project-native tools
 ```
 
-Do not assume a tool exists merely because it appears in this skill.
+Do not assume a tool exists merely because it appears in this guidance.
 
 Do not dispatch to another environment solely because a security test is unavailable locally. Dispatch only when project workflow permits it and the security requirement materially justifies it.
 
@@ -2136,7 +2136,7 @@ Security fixes must preserve intended business behavior.
 
 # RELATIONSHIP WITH IMPLEMENTATION AND VALIDATION
 
-# 93. Handoff to Plemo Native Planner
+# 93. Integration With Native Planning
 
 For an authorized fix/implementation task, output concise security evidence:
 
@@ -2161,9 +2161,9 @@ Do not write a duplicate full execution plan.
 
 ---
 
-# 94. Handoff to Regression & Runtime Validator
+# 94. Post-Implementation Validation Requirements
 
-After implementation, provide Skill 4 with security-specific scenarios such as:
+After implementation, include security-specific scenarios in broader post-change validation, such as:
 
 ```text
 allowed user succeeds
@@ -2175,7 +2175,7 @@ sudo path remains scoped
 attachment download respects record access
 ```
 
-Skill 4 owns the broader post-change regression result.
+The broader post-change validation phase owns the overall regression result.
 
 ---
 
@@ -2194,7 +2194,7 @@ Smallest safe fix
         ↓
 Security-specific recheck
         ↓
-Skill 4 broader regression/runtime validation when needed
+broader post-change regression/runtime validation when needed
 ```
 
 Do not ask for duplicate approval solely to enter this loop.
@@ -2370,7 +2370,7 @@ State the smallest safe enforcement boundary.
 
 ## 22. Runtime Validation Requirements
 
-List exact tests Skill 4 should run.
+List the exact runtime/regression tests required after implementation.
 
 ## 23. Files Investigated
 
@@ -2542,7 +2542,7 @@ START
   v
 Is there a material security surface?
   |
-  +-- No -> Do not force this skill.
+  +-- No -> Do not force this guidance.
   |
   +-- Yes
         |
@@ -2553,7 +2553,7 @@ Read plemo.md / project rules.
 Determine task mode.
         |
         v
-Reuse Investigator / Impact evidence.
+Reuse existing investigation / impact evidence.
         |
         v
 Detect Odoo version.
@@ -2638,7 +2638,7 @@ Is task audit-only?
         +-- No, fix already authorized
               |
               v
-        Hand evidence to Plemo native planner.
+        Continue into Plemo native planning using the evidence.
               |
               v
         Implement smallest safe fix.
@@ -2647,7 +2647,7 @@ Is task audit-only?
         Recheck security-specific scenarios.
               |
               v
-        Hand runtime requirements to Skill 4 when needed.
+        Carry runtime requirements into broader post-change validation when needed.
 ```
 
 ---
@@ -2719,4 +2719,4 @@ Output security evidence, not a second generic implementation plan.
 
 After a fix:
 recheck the security boundary,
-then use Odoo Regression & Runtime Validator for broader validation when needed.
+then perform broader post-change regression/runtime validation when needed.

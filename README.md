@@ -4,6 +4,15 @@ A collection of reusable AI agent skills used for Odoo development, investigatio
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
+
+### Silent Use During Normal Chat
+
+Skill names and numbers in this README are repository documentation only.
+
+During normal user conversations, Plemo should apply the relevant knowledge, procedures, and safeguards internally without requiring the user to invoke a named skill. Plemo should not announce which skill it selected, ask the user to choose a skill, expose internal skill routing, or refer to numbered skills unless the user explicitly asks about the skill library itself.
+
+The operational skill files are therefore written as reusable guidance rather than as separate agents that route work to one another.
+
 ## Available Skills
 
 ### 1. Odoo Localization & Arabic QA
@@ -42,6 +51,12 @@ A deep Odoo security specialist for reviewing effective access across ACLs, reco
 
 An Odoo upgrade and migration specialist for determining how schema, stored-compute, Selection, XML ID, `noupdate`, dependency, configuration, and major-version changes affect installed databases and existing production data. It separates fresh installation from existing-database upgrade behavior, identifies required migration scripts and data mappings, analyzes recomputation, legacy-data, performance, downtime, and rollback risk, and produces structured migration evidence for Plemo's native planner without replacing the agent's deployment or implementation workflow.
 
+### 7. Odoo Performance Analyzer
+
+**File:** `odoo_performance_analyzer_skill.md`
+
+An Odoo performance specialist for analyzing realistic execution paths, ORM/query behavior, N+1 patterns, search/write amplification, computed-field and recompute fan-out, cron/import/report workloads, controller/RPC latency, frontend request/render cost, caching, memory, locking/concurrency, indexes, and migration-time performance. It separates static performance risk from measured evidence, requires realistic data-scale and before/after proof when needed, recommends the smallest safe optimization boundary, and hands implementation back to Plemo's native planner instead of becoming a generic optimizer.
+
 ## Skill Interaction Model
 
 ```text
@@ -56,6 +71,8 @@ Feature impact evidence when material
 Odoo Upgrade & Migration Analyzer when persistence/upgrade risk exists
         ↓
 Odoo Security & Access Reviewer when security-sensitive
+        ↓
+Odoo Performance Analyzer when scale/runtime cost is material
         ↓
 Agent native planning
         ↓
@@ -81,6 +98,8 @@ General rules:
 - `sudo()` is treated as a privileged bypass that requires explicit justification, narrow scope, and authorization of user-controlled records.
 - Upgrade-sensitive changes must distinguish fresh installation from existing-database upgrade behavior and treat existing production data as part of the compatibility contract.
 - Migration analysis must identify data mappings, recomputation, XML ID/`noupdate` behavior, rollback limitations, and runtime upgrade verification without replacing Plemo's native deployment planning.
+- Performance-sensitive changes must distinguish static risk from measured runtime evidence; performance improvements or regressions should not be claimed without comparable measurement when measurement is required.
+- Performance optimization must preserve business correctness and security, use realistic data volume/concurrency, and hand implementation back to Plemo's native planner rather than becoming a second optimization workflow.
 
 ## Repository Structure
 
@@ -92,5 +111,6 @@ Plemo-Skills/
 ├── odoo_feature_impact_analyzer_skill.md
 ├── odoo_regression_runtime_validator_skill.md
 ├── odoo_security_access_reviewer_skill.md
-└── odoo_upgrade_migration_analyzer_skill.md
+├── odoo_upgrade_migration_analyzer_skill.md
+└── odoo_performance_analyzer_skill.md
 ```

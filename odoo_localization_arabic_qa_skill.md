@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Use this skill to investigate, implement, review, and validate Arabic localization for an Odoo module.
+Use this guidance to investigate, implement, review, and validate Arabic localization for an Odoo module.
 
-The skill must work across different Odoo versions. Never assume the Odoo version, module path, frontend architecture, translation structure, or available JavaScript APIs before inspecting the actual project.
+The analysis must work across different Odoo versions. Never assume the Odoo version, module path, frontend architecture, translation structure, or available JavaScript APIs before inspecting the actual project.
 
 The required localization architecture is:
 
@@ -33,13 +33,13 @@ The core operating principle is:
 
 > Investigate first. Understand the existing implementation. Make the smallest safe localization changes. Validate before finishing.
 
-# 0. Native Agent Compatibility, Task Mode, and Skill Scope
+# 0. Native Agent Compatibility, Task Mode, and Guidance Scope
 
-This skill adds Plemo-specific Odoo localization rules and safeguards. It does not replace the agent's native repository discovery, planning, implementation, or task-mode behavior.
+this guidance adds Plemo-specific Odoo localization rules and safeguards. It does not replace the agent's native repository discovery, planning, implementation, or task-mode behavior.
 
-Reuse reliable evidence already collected during the current task. Do not repeat another skill's investigation unless the existing evidence is insufficient, stale, or does not cover the localization question.
+Reuse reliable evidence already collected during the current task. Do not repeat previously collected investigation evidence unless the existing evidence is insufficient, stale, or does not cover the localization question.
 
-Repository-specific instructions such as `plemo.md`, configured addon paths, and reliable native discovery tools take precedence over generic repository-layout examples in this skill.
+Repository-specific instructions such as `plemo.md`, configured addon paths, and reliable native discovery tools take precedence over generic repository-layout examples in this guidance.
 
 Determine the current task mode before making any repository change:
 
@@ -61,7 +61,7 @@ For **Implementation / Fix**:
 - localization changes are allowed within the user's requested scope;
 - perform the investigation phase first;
 - the user's existing add/fix/build/localize request counts as implementation authorization;
-- do not ask for a second approval solely because this skill performed an investigation;
+- do not ask for a second approval solely because this guidance performed an investigation;
 - ask only when the investigation reveals a material scope change, destructive operation, or unresolved decision that would make proceeding unsafe.
 
 For **Validation**:
@@ -69,23 +69,23 @@ For **Validation**:
 - validate the current implementation;
 - remain read-only unless the user explicitly asked for fixes as part of validation.
 
-Use the smallest applicable portion of this skill for the task. Do not force a full localization audit/report for a trivial isolated correction unless the user explicitly requests one.
+Use the smallest applicable portion of this guidance for the task. Do not force a full localization audit/report for a trivial isolated correction unless the user explicitly requests one.
 
 ## 0.1 Plemo JavaScript Localization Policy Scope
 
-The `localize("English", "Arabic")` helper architecture in this skill is a Plemo/project localization policy.
+The `localize("English", "Arabic")` helper architecture in this guidance is a Plemo/project localization policy.
 
-Apply it when this skill is active for the target module/workflow.
+Apply it only when the target module/workflow falls within this localization policy.
 
 Do not treat the prohibition on new JavaScript `_t()` usage as a universal repository-wide Odoo rule for unrelated modules or projects unless their localization policy explicitly adopts this architecture.
 
-Existing valid Odoo-native `_t()` usage outside the target workflow must not be rewritten merely to satisfy this skill.
+Existing valid Odoo-native `_t()` usage outside the target workflow must not be rewritten merely to satisfy this guidance.
 
 ---
 
 # 1. Mandatory Startup Procedure
 
-Follow this order whenever this skill is used:
+Follow this order whenever this guidance is used:
 
 1. Determine the target module.
 2. Locate and verify the module directory.
@@ -224,7 +224,7 @@ If the version cannot be established confidently, report the uncertainty before 
 
 # 5. Investigate Before Modifying
 
-When repository-native discovery tools are available, prefer them over broad shell scans. Examples may include `find_addon`, `search_code`, targeted `read_file`, or equivalent safe tools. Shell commands and paths shown in this skill are examples, not mandatory tooling.
+When repository-native discovery tools are available, prefer them over broad shell scans. Examples may include `find_addon`, `search_code`, targeted `read_file`, or equivalent safe tools. Shell commands and paths shown in this guidance are examples, not mandatory tooling.
 
 Before editing localization code or translation files, inspect the target module.
 
@@ -1307,7 +1307,7 @@ If existing JS contains `_t()`:
 
 Do not blindly replace `_t()` repository-wide.
 
-For new JS localization under this skill, use `localize()`.
+For new JS localization under this guidance, use `localize()`.
 
 ---
 
