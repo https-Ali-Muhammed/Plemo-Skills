@@ -57,30 +57,28 @@ An Odoo upgrade and migration specialist for determining how schema, stored-comp
 
 An Odoo performance specialist for analyzing realistic execution paths, ORM/query behavior, N+1 patterns, search/write amplification, computed-field and recompute fan-out, cron/import/report workloads, controller/RPC latency, frontend request/render cost, caching, memory, locking/concurrency, indexes, and migration-time performance. It separates static performance risk from measured evidence, requires realistic data-scale and before/after proof when needed, recommends the smallest safe optimization boundary, and hands implementation back to Plemo's native planner instead of becoming a generic optimizer.
 
+### 8. Odoo Code Quality Reviewer
+
+**File:** `odoo_code_quality_reviewer_skill.md`
+
+An Odoo code-quality and maintainability specialist for reviewing module ownership, addon boundaries, inheritance and `super()` contracts, multi-record safety, fields and ORM usage, computes, CRUD overrides, context usage, controllers, XML/XPath, QWeb, JavaScript/OWL, assets, duplication, abstraction, dead code, logging, testability, and version/upgrade fragility. It follows `plemo.md` and repository conventions before generic style preferences, separates correctness and maintainability risks from subjective style, recommends the smallest safe improvement boundary, and preserves Plemo's native planning, implementation, approval, and task-mode behavior.
+
 ## Skill Interaction Model
 
 ```text
 Repository instructions / plemo.md
         ↓
-Agent native discovery + task mode
+Plemo native discovery + task mode
         ↓
-Codebase / localization evidence
+Apply relevant specialized evidence, procedures, and safeguards internally
         ↓
-Feature impact evidence when material
+Plemo native planning
         ↓
-Odoo Upgrade & Migration Analyzer when persistence/upgrade risk exists
+Plemo native implementation
         ↓
-Odoo Security & Access Reviewer when security-sensitive
+Relevant post-change validation
         ↓
-Odoo Performance Analyzer when scale/runtime cost is material
-        ↓
-Agent native planning
-        ↓
-Agent native implementation
-        ↓
-Odoo Regression & Runtime Validator
-        ↓
-Evidence-backed PASS / FAIL / PARTIAL / BLOCKED
+Evidence-backed result
 ```
 
 General rules:
@@ -99,7 +97,9 @@ General rules:
 - Upgrade-sensitive changes must distinguish fresh installation from existing-database upgrade behavior and treat existing production data as part of the compatibility contract.
 - Migration analysis must identify data mappings, recomputation, XML ID/`noupdate` behavior, rollback limitations, and runtime upgrade verification without replacing Plemo's native deployment planning.
 - Performance-sensitive changes must distinguish static risk from measured runtime evidence; performance improvements or regressions should not be claimed without comparable measurement when measurement is required.
-- Performance optimization must preserve business correctness and security, use realistic data volume/concurrency, and hand implementation back to Plemo's native planner rather than becoming a second optimization workflow.
+- Performance optimization must preserve business correctness and security, use realistic data volume/concurrency, and remain subordinate to Plemo's native planning and implementation workflow.
+- Code-quality review must follow `plemo.md` and repository conventions before generic style preferences, distinguish objective maintainability/correctness risk from subjective style, and avoid unrelated refactoring.
+- Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
 
@@ -112,5 +112,6 @@ Plemo-Skills/
 ├── odoo_regression_runtime_validator_skill.md
 ├── odoo_security_access_reviewer_skill.md
 ├── odoo_upgrade_migration_analyzer_skill.md
-└── odoo_performance_analyzer_skill.md
+├── odoo_performance_analyzer_skill.md
+└── odoo_code_quality_reviewer_skill.md
 ```
