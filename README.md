@@ -24,6 +24,12 @@ A read-only Odoo investigation skill for tracing feature ownership, repository s
 
 An Odoo-specific change-impact discovery skill for material changes. It analyzes direct, reverse, transitive, dynamic, and runtime dependencies; data and upgrade consequences; stored-compute and Selection-change risks; JS/RPC and asset impact; security, integrations, performance, regression surface, runtime-verification requirements, and explicit do-not-touch boundaries. It produces structured impact evidence for the agent's native planner instead of replacing the agent's own implementation planning.
 
+### 4. Odoo Regression & Runtime Validator
+
+**File:** `odoo_regression_runtime_validator_skill.md`
+
+A post-implementation Odoo validation skill that proves what actually works after a change. It reuses existing investigation and impact evidence, validates the final diff, separates static checks from runtime/browser/security/integration proof, distinguishes fresh install from module upgrade and existing-data behavior, selects regression tests from the real impact surface, protects production from unsafe validation actions, and reports explicit `PASS`, `FAIL`, `PARTIAL`, or `BLOCKED` results without replacing Plemo's native planning, implementation, or debugging workflow.
+
 ## Skill Interaction Model
 
 ```text
@@ -31,13 +37,17 @@ Repository instructions / plemo.md
         ↓
 Agent native discovery + task mode
         ↓
-Specialized Plemo skill evidence
+Codebase / localization evidence
+        ↓
+Feature impact evidence when material
         ↓
 Agent native planning
         ↓
 Agent native implementation
         ↓
-Validation / QA
+Odoo Regression & Runtime Validator
+        ↓
+Evidence-backed PASS / FAIL / PARTIAL / BLOCKED
 ```
 
 General rules:
@@ -49,6 +59,8 @@ General rules:
 - An existing add / fix / build / change / implement request already counts as implementation authorization; skills must not require a second approval solely because they performed investigation or impact analysis.
 - Repository-specific guidance such as `plemo.md` takes precedence over generic repository-layout examples inside a skill.
 - A valid Odoo module manifest version prefix may be used as version evidence when Odoo core source is unavailable.
+- Validation must distinguish static evidence from actual runtime proof; an unavailable required runtime check must never be reported as passed.
+- Production validation should prefer read-only/reversible observation and must not perform destructive or business-impacting actions without the authorization required by the project workflow.
 
 ## Repository Structure
 
@@ -57,5 +69,6 @@ Plemo-Skills/
 ├── README.md
 ├── odoo_localization_arabic_qa_skill.md
 ├── odoo_codebase_investigator_skill.md
-└── odoo_feature_impact_analyzer_skill.md
+├── odoo_feature_impact_analyzer_skill.md
+└── odoo_regression_runtime_validator_skill.md
 ```
