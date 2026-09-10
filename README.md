@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -69,6 +69,12 @@ An Odoo code-quality and maintainability specialist for reviewing module ownersh
 
 An Odoo automated-test engineering specialist for designing, implementing, reviewing, and maintaining durable regression coverage at the correct test layer. It reuses investigation, impact, security, migration, performance, localization, code-quality, and runtime-validation evidence; detects the actual Odoo version and repository test conventions before selecting APIs; inventories existing tests before adding new ones; and chooses the smallest reliable layer across ORM/business-flow, security/user-context, controllers/HTTP/RPC, reports, crons/jobs, integrations, migrations, frontend unit tests, and browser/tour tests. It emphasizes deterministic fixtures, actor/company/website-aware scenarios, positive and negative coverage, isolation from live external systems, version-verified test frameworks, discovery/CI verification, flakiness prevention, and semantic assertions over implementation-detail tests. It creates permanent automated protection without replacing Plemo's native planning/implementation workflow or the separate Regression & Runtime Validator, which remains responsible for environment-specific runtime proof.
 
+### 10. Odoo Frontend & OWL Specialist
+
+**File:** `odoo_frontend_owl_specialist_skill.md`
+
+An Odoo frontend and OWL engineering specialist for investigating, designing, implementing, reviewing, debugging, and safely extending browser-side behavior across the backend web client, website, portal, and other relevant Odoo frontend surfaces. It detects the actual Odoo version and frontend architecture before selecting APIs; traces component, template, service, registry, patch, asset, RPC/controller, model, and CSS ownership; and prefers the narrowest stable framework extension boundary over global patches, copied upstream components, or fragile DOM manipulation. It adds deep guidance for OWL lifecycle and reactive state, async/race handling, service and registry contracts, patch composition/load order, QWeb/OWL template inheritance, asset bundles/import paths, frontend-to-server contracts, public/portal and multi-company/multi-website contexts, website/POS-specific architecture, browser debugging, and version upgrades. It keeps server-side security and business rules authoritative, reuses Impact/Security/Performance/Localization evidence instead of duplicating those skills, hands durable test design to the Automated Test Engineer, and leaves final browser/runtime proof to the Regression & Runtime Validator.
+
 ## Skill Interaction Model
 
 ```text
@@ -107,6 +113,7 @@ General rules:
 - Code-quality review must follow `plemo.md` and repository conventions before generic style preferences, distinguish objective maintainability/correctness risk from subjective style, and avoid unrelated refactoring.
 - Automated-test engineering must protect meaningful business and framework contracts with the smallest reliable test layer, reuse existing evidence, follow repository/version-specific test conventions, avoid live external dependencies and brittle implementation-detail assertions, and keep automated coverage separate from runtime/environment proof.
 - A green automated test suite must not be treated as proof of browser asset behavior, existing-database upgrade safety, live integration behavior, production-scale concurrency/performance, or other runtime-only conditions that require the Regression & Runtime Validator.
+- Frontend/OWL engineering must detect the actual Odoo version and frontend surface, trace component/template/service/registry/patch/asset/server ownership before implementation, prefer the narrowest supported extension point, keep business/security enforcement server-side, and separate static frontend confidence from actual browser/runtime proof.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -122,5 +129,6 @@ Plemo-Skills/
 ├── odoo_upgrade_migration_analyzer_skill.md
 ├── odoo_performance_analyzer_skill.md
 ├── odoo_code_quality_reviewer_skill.md
-└── odoo_automated_test_engineer_skill.md
+├── odoo_automated_test_engineer_skill.md
+└── odoo_frontend_owl_specialist_skill.md
 ```
