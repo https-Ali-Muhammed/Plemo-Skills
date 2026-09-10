@@ -63,6 +63,12 @@ An Odoo performance specialist for analyzing realistic execution paths, ORM/quer
 
 An Odoo code-quality and maintainability specialist for reviewing module ownership, addon boundaries, inheritance and `super()` contracts, multi-record safety, fields and ORM usage, computes, CRUD overrides, context usage, controllers, XML/XPath, QWeb, JavaScript/OWL, assets, duplication, abstraction, dead code, logging, testability, and version/upgrade fragility. It follows `plemo.md` and repository conventions before generic style preferences, separates correctness and maintainability risks from subjective style, recommends the smallest safe improvement boundary, and preserves Plemo's native planning, implementation, approval, and task-mode behavior.
 
+### 9. Odoo Automated Test Engineer
+
+**File:** `odoo_automated_test_engineer_skill.md`
+
+An Odoo automated-test engineering specialist for designing, implementing, reviewing, and maintaining durable regression coverage at the correct test layer. It reuses investigation, impact, security, migration, performance, localization, code-quality, and runtime-validation evidence; detects the actual Odoo version and repository test conventions before selecting APIs; inventories existing tests before adding new ones; and chooses the smallest reliable layer across ORM/business-flow, security/user-context, controllers/HTTP/RPC, reports, crons/jobs, integrations, migrations, frontend unit tests, and browser/tour tests. It emphasizes deterministic fixtures, actor/company/website-aware scenarios, positive and negative coverage, isolation from live external systems, version-verified test frameworks, discovery/CI verification, flakiness prevention, and semantic assertions over implementation-detail tests. It creates permanent automated protection without replacing Plemo's native planning/implementation workflow or the separate Regression & Runtime Validator, which remains responsible for environment-specific runtime proof.
+
 ## Skill Interaction Model
 
 ```text
@@ -99,6 +105,8 @@ General rules:
 - Performance-sensitive changes must distinguish static risk from measured runtime evidence; performance improvements or regressions should not be claimed without comparable measurement when measurement is required.
 - Performance optimization must preserve business correctness and security, use realistic data volume/concurrency, and remain subordinate to Plemo's native planning and implementation workflow.
 - Code-quality review must follow `plemo.md` and repository conventions before generic style preferences, distinguish objective maintainability/correctness risk from subjective style, and avoid unrelated refactoring.
+- Automated-test engineering must protect meaningful business and framework contracts with the smallest reliable test layer, reuse existing evidence, follow repository/version-specific test conventions, avoid live external dependencies and brittle implementation-detail assertions, and keep automated coverage separate from runtime/environment proof.
+- A green automated test suite must not be treated as proof of browser asset behavior, existing-database upgrade safety, live integration behavior, production-scale concurrency/performance, or other runtime-only conditions that require the Regression & Runtime Validator.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -113,5 +121,6 @@ Plemo-Skills/
 ├── odoo_security_access_reviewer_skill.md
 ├── odoo_upgrade_migration_analyzer_skill.md
 ├── odoo_performance_analyzer_skill.md
-└── odoo_code_quality_reviewer_skill.md
+├── odoo_code_quality_reviewer_skill.md
+└── odoo_automated_test_engineer_skill.md
 ```
