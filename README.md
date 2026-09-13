@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -75,6 +75,12 @@ An Odoo automated-test engineering specialist for designing, implementing, revie
 
 An Odoo frontend and OWL engineering specialist for investigating, designing, implementing, reviewing, debugging, and safely extending browser-side behavior across the backend web client, website, portal, and other relevant Odoo frontend surfaces. It detects the actual Odoo version and frontend architecture before selecting APIs; traces component, template, service, registry, patch, asset, RPC/controller, model, and CSS ownership; and prefers the narrowest stable framework extension boundary over global patches, copied upstream components, or fragile DOM manipulation. It adds deep guidance for OWL lifecycle and reactive state, async/race handling, service and registry contracts, patch composition/load order, QWeb/OWL template inheritance, asset bundles/import paths, frontend-to-server contracts, public/portal and multi-company/multi-website contexts, website/POS-specific architecture, browser debugging, and version upgrades. It keeps server-side security and business rules authoritative, reuses Impact/Security/Performance/Localization evidence instead of duplicating those skills, hands durable test design to the Automated Test Engineer, and leaves final browser/runtime proof to the Regression & Runtime Validator.
 
+### 11. Odoo Integration & Webhook Reliability Specialist
+
+**File:** `odoo_integration_webhook_reliability_specialist_skill.md`
+
+An Odoo integration-reliability specialist for investigating, designing, implementing, reviewing, and debugging external API, webhook, polling, synchronization, queue/job, and provider workflows under real distributed-system failure conditions. It traces the Odoo business owner, transport boundary, external identifiers, synchronization state, credentials/configuration scope, provider contract/version, transaction boundaries, and recovery path; then applies explicit rules for bounded retry, timeout ambiguity, rate limits, durable idempotency, duplicate and out-of-order webhook delivery, pagination/cursors, source-of-truth mappings, schema drift, multi-company/multi-website ownership, reconciliation, operator recovery, and sanitized observability. It does not replace Security, Migration, Performance, Impact, Automated Testing, or Runtime Validation: it identifies and owns the integration protocol/reliability contract, reuses those skills' evidence, hands durable regression scenarios to the Automated Test Engineer, and leaves provider/sandbox/runtime proof to the Regression & Runtime Validator.
+
 ## Skill Interaction Model
 
 ```text
@@ -114,6 +120,8 @@ General rules:
 - Automated-test engineering must protect meaningful business and framework contracts with the smallest reliable test layer, reuse existing evidence, follow repository/version-specific test conventions, avoid live external dependencies and brittle implementation-detail assertions, and keep automated coverage separate from runtime/environment proof.
 - A green automated test suite must not be treated as proof of browser asset behavior, existing-database upgrade safety, live integration behavior, production-scale concurrency/performance, or other runtime-only conditions that require the Regression & Runtime Validator.
 - Frontend/OWL engineering must detect the actual Odoo version and frontend surface, trace component/template/service/registry/patch/asset/server ownership before implementation, prefer the narrowest supported extension point, keep business/security enforcement server-side, and separate static frontend confidence from actual browser/runtime proof.
+- Integration/webhook reliability must treat external identifiers and synchronization state as compatibility data, classify timeout/retry behavior, make material side effects idempotent, handle duplicate/out-of-order delivery safely, preserve a reconciliation path for uncertain outcomes, and avoid live external side effects during ordinary automated testing.
+- A transport success or HTTP 2xx must not automatically be treated as final business success, and a timeout must not automatically be treated as remote failure when the provider may already have committed the operation.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -130,5 +138,6 @@ Plemo-Skills/
 ├── odoo_performance_analyzer_skill.md
 ├── odoo_code_quality_reviewer_skill.md
 ├── odoo_automated_test_engineer_skill.md
-└── odoo_frontend_owl_specialist_skill.md
+├── odoo_frontend_owl_specialist_skill.md
+└── odoo_integration_webhook_reliability_specialist_skill.md
 ```
