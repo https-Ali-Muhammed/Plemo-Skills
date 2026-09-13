@@ -2,22 +2,49 @@
 
 ## Purpose
 
-Use this guidance to design, implement, review, and maintain automated tests for Odoo changes.
+You are Plemo. Apply this skill internally when you design, implement, review, or maintain automated tests for Odoo changes.
 
-The goal is not to create tests merely to increase test count.
+Your objective is not to create tests merely to increase test count.
 
-The goal is to build durable executable coverage that proves important Odoo behavior, protects meaningful regression surfaces, and remains understandable and maintainable as the module evolves.
+Your objective is to build durable executable coverage that proves important Odoo behavior, protects meaningful regression surfaces, and remains understandable and maintainable as the module evolves.
 
-This guidance adds **Odoo-specific automated-test engineering procedures and evidence**.
+Use this skill as **Odoo-specific automated-test engineering procedures and evidence** layered on top of your existing capabilities.
 
-It does not replace Plemo's native repository discovery, planning, implementation, debugging, final review, or the existing regression/runtime-validation workflow.
+Do not let this skill replace your native repository discovery, planning, implementation, debugging, final review, or the existing regression/runtime-validation workflow.
 
-Its core question is:
+Your core question is:
 
 ```text
 Which behaviors are important enough to protect permanently,
 and what is the smallest reliable Odoo automated test suite that proves them?
 ```
+
+### Internal Audience Contract
+
+Read every instruction in this file as an instruction to **you, Plemo**.
+
+When this file says:
+
+```text
+you / your
+```
+
+it means Plemo.
+
+When this file says:
+
+```text
+user
+requester
+portal user
+public user
+internal user
+operator
+```
+
+it refers to the human requester or an Odoo/application actor in the scenario, not to the reader of this skill.
+
+Apply the skill silently during normal work. Do not explain skill routing, skill selection, or internal handoffs unless the requester explicitly asks about the skill system.
 
 Core principles:
 
@@ -46,11 +73,11 @@ Core principles:
 
 ---
 
-# 0. Native Plemo Compatibility
+# 0. Compatibility With Your Native Workflow
 
-This guidance extends Plemo's existing agent capabilities. It does not replace them.
+Treat this skill as an extension of your existing capabilities, not a replacement for them.
 
-Plemo already performs native repository discovery, task-mode understanding, planning, implementation, ordinary debugging, targeted checks, and final diff review.
+You already perform native repository discovery, task-mode understanding, planning, implementation, ordinary debugging, targeted checks, and final diff review.
 
 The existing regression/runtime-validation capability already answers:
 
@@ -59,7 +86,7 @@ The implementation is complete.
 What can now be proven to work in the available environments?
 ```
 
-This guidance answers a different question:
+Use this skill to answer a different question:
 
 ```text
 What automated tests should exist in the repository
@@ -81,12 +108,12 @@ customer restrictions
 repository test conventions
 CI conventions
 deployment conventions
-available Plemo tools
+your available Plemo tools
 ```
 
-take precedence over generic examples in this guidance.
+take precedence over generic examples in this skill.
 
-Use the smallest applicable part of this guidance for the actual change.
+Apply only the smallest relevant part of this skill to the actual change.
 
 ---
 
@@ -104,9 +131,9 @@ existing feature-impact evidence
 specialized evidence when relevant
     security / migration / performance / localization / quality
         ↓
-Plemo native planning
+your native planning
         ↓
-Plemo native implementation
+your native implementation
         ↓
 automated-test engineering
     "Which important behaviors deserve permanent executable protection,
@@ -116,7 +143,7 @@ regression/runtime validation
     "What can now be proven in the actual available runtime environments?"
 ```
 
-This guidance may run before implementation when test design materially affects architecture.
+You may apply this skill before implementation when test design materially affects architecture.
 
 It may also run during or after implementation to add or repair test coverage.
 
@@ -144,7 +171,7 @@ Existing test failures
 Actual final diff
 ```
 
-Do not repeat full codebase investigation, impact analysis, security review, migration analysis, or runtime validation merely because this guidance is active.
+Do not repeat full codebase investigation, impact analysis, security review, migration analysis, or runtime validation merely because this skill is active.
 
 ---
 
@@ -176,7 +203,7 @@ For **Add automated tests**, **Fix broken tests**, **Implement feature + automat
 
 - the user's original request authorizes test changes within that requested scope;
 - do not ask for duplicate approval solely because test analysis completed;
-- continue through Plemo's native planning and implementation workflow;
+- continue through your native planning and implementation workflow;
 - keep production-code changes separate from test-only changes unless production behavior genuinely requires a fix;
 - do not change production behavior merely to force a test to pass.
 
@@ -932,7 +959,7 @@ Verify row counts/reconciliation, mapping completeness, important business value
 
 Do not invent a migration-test framework if the repository does not have one.
 
-When automated upgrade proof is not feasible locally, record the required runtime upgrade scenario for the Runtime Validator.
+When automated upgrade proof is not feasible locally, record the required runtime upgrade scenario and hand it to your Regression & Runtime Validator workflow.
 
 # 43. Upgrade-Sensitive Tests
 
@@ -1092,7 +1119,7 @@ Avoid creating thousands of records when a small representative set proves the c
 
 Keep tests representative without making every test a load test.
 
-Performance benchmarking itself belongs to the performance-analysis/measurement workflow, not ordinary correctness tests.
+When performance benchmarking is required, apply your performance-analysis/measurement workflow rather than treating it as an ordinary correctness test.
 
 # 57. Flakiness Review
 
@@ -1180,7 +1207,7 @@ Do not start by writing a large generic test file before understanding the prote
 
 # 64. Test-First vs Test-After
 
-This guidance does not force one universal development methodology.
+Do not let this skill force one universal development methodology.
 
 A regression bug often benefits from:
 
@@ -1336,7 +1363,7 @@ security unit test passes
 
 Use automated tests as durable protection.
 
-Use the existing Regression & Runtime Validator for environment-specific proof.
+Use your existing Regression & Runtime Validator workflow for environment-specific proof.
 
 # 73. Runtime Requirements Handoff
 
@@ -1459,7 +1486,7 @@ Do not use `ADEQUATE FOR REVIEWED SCOPE` if material scenarios remain untested w
 
 # 77. Concise Output for Embedded Implementation Work
 
-When this guidance runs inside an already-authorized implementation task, keep internal evidence concise unless the test surface is complex.
+When you apply this skill inside an already-authorized implementation task, keep internal evidence concise unless the test surface is complex.
 
 A concise handoff may be:
 
@@ -1474,7 +1501,7 @@ Runtime-only gaps:
 Do-not-touch:
 ```
 
-Then continue through Plemo's native implementation workflow.
+Then continue through your native implementation workflow.
 
 Do not flood the user with internal skill routing or duplicate planning.
 

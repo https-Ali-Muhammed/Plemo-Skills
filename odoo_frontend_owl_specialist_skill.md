@@ -2,23 +2,50 @@
 
 ## Purpose
 
-Use this guidance to investigate, design, implement, review, debug, and safely extend Odoo frontend behavior across the web client, website, portal, and other Odoo frontend surfaces when relevant.
+You are Plemo. Apply this skill internally when you investigate, design, implement, review, debug, or safely extend Odoo frontend behavior across the web client, website, portal, and other relevant Odoo frontend surfaces.
 
-The goal is not to apply generic JavaScript advice to an Odoo repository.
+Your objective is not to apply generic JavaScript advice to an Odoo repository.
 
-The goal is to understand the actual Odoo frontend architecture in the detected version and repository, identify the component/template/service/registry/patch/asset/RPC ownership chain, and make the smallest safe frontend change without breaking framework contracts or downstream consumers.
+Your objective is to understand the actual Odoo frontend architecture in the detected version and repository, identify the component/template/service/registry/patch/asset/RPC ownership chain, and make the smallest safe frontend change without breaking framework contracts or downstream consumers.
 
-This guidance adds **Odoo-specific frontend and OWL procedures, safeguards, and evidence**.
+Use this skill as **Odoo-specific frontend and OWL procedures, safeguards, and evidence** layered on top of your existing capabilities.
 
-It does not replace Plemo's native repository discovery, planning, implementation, debugging, final review, or the existing impact, security, performance, code-quality, automated-test, and regression/runtime-validation workflows.
+Do not let this skill replace your native repository discovery, planning, implementation, debugging, final review, or the existing impact, security, performance, code-quality, automated-test, and regression/runtime-validation workflows.
 
-Its core question is:
+Your core question is:
 
 ```text
 How does this frontend behavior actually work in this Odoo version,
 where is the safest extension boundary,
 and how can it be changed without creating fragile browser-side behavior?
 ```
+
+### Internal Audience Contract
+
+Read every instruction in this file as an instruction to **you, Plemo**.
+
+When this file says:
+
+```text
+you / your
+```
+
+it means Plemo.
+
+When this file says:
+
+```text
+user
+requester
+portal user
+public user
+internal user
+operator
+```
+
+it refers to the human requester or an Odoo/application actor in the scenario, not to the reader of this skill.
+
+Apply the skill silently during normal work. Do not explain skill routing, skill selection, or internal handoffs unless the requester explicitly asks about the skill system.
 
 Core principles:
 
@@ -45,15 +72,15 @@ Core principles:
 
 ---
 
-# 0. Native Plemo Compatibility
+# 0. Compatibility With Your Native Workflow
 
-This guidance extends Plemo's existing agent capabilities. It does not replace them.
+Treat this skill as an extension of your existing capabilities, not a replacement for them.
 
-Plemo already performs repository discovery, task-mode understanding, planning, implementation, ordinary debugging, targeted checks, and final diff review.
+You already perform repository discovery, task-mode understanding, planning, implementation, ordinary debugging, targeted checks, and final diff review.
 
 The existing skills already provide specialized evidence for codebase investigation, impact analysis, security, migration, performance, code quality, automated tests, localization, and post-change runtime validation.
 
-This guidance must not create a second generic planning system or a second impact/regression workflow.
+Do not let this skill create a second generic planning system or a second impact/regression workflow.
 
 Repository-specific instructions such as:
 
@@ -64,7 +91,7 @@ customer restrictions
 repository frontend conventions
 asset conventions
 build/deployment conventions
-available Plemo tools
+your available Plemo tools
 ```
 
 take precedence over generic examples here.
@@ -90,7 +117,7 @@ Odoo Frontend & OWL Specialist
     "How should this frontend behavior be safely implemented or debugged
      in the actual Odoo architecture?"
         ↓
-Plemo native planning / implementation
+your native planning / implementation
         ↓
 Odoo Automated Test Engineer when durable frontend coverage is justified
         ↓
@@ -156,7 +183,7 @@ For **implement / fix / refactor / migrate**:
 
 - the original user request authorizes implementation within that scope;
 - do not ask for duplicate approval solely because frontend analysis completed;
-- continue through Plemo's normal planning and implementation workflow;
+- continue through your normal planning and implementation workflow;
 - preserve unrelated frontend behavior;
 - do not broaden a local change into a global patch/refactor without evidence.
 
@@ -1223,7 +1250,7 @@ request triggered on every rerender
 
 Do not prematurely optimize without evidence.
 
-When scale/performance is material, hand measurement requirements to the Performance Analyzer.
+When scale/performance is material, apply your Performance Analyzer workflow for the required measurements.
 
 ---
 
@@ -1310,7 +1337,7 @@ Treat URL/query/body record IDs as untrusted.
 
 Do not use a privileged server route merely because the frontend hides IDs.
 
-When tokens are involved, defer deep token/security analysis to the Security & Access Reviewer and reuse its evidence.
+When tokens are involved, apply your Security & Access Reviewer workflow for deep token/security analysis and reuse its evidence.
 
 ---
 
@@ -1432,9 +1459,9 @@ When the change introduces or modifies user-visible text, apply the project's lo
 
 Do not invent a translation approach inside this skill.
 
-Reuse the existing Localization & Arabic QA evidence and Plemo-specific JavaScript localization policy when that policy applies to the project/task.
+Reuse the existing Localization & Arabic QA evidence and your established JavaScript localization policy when that policy applies to the project/task.
 
-This skill owns frontend architecture; localization guidance owns translation mechanics and Arabic wording/RTL localization safeguards.
+Use this skill for frontend architecture. Use your Localization & Arabic QA workflow for translation mechanics, Arabic wording, and RTL localization safeguards.
 
 ---
 
@@ -1500,7 +1527,7 @@ RPC frequency
 
 Do not claim a performance problem from code appearance alone.
 
-When performance is material, provide suspected hot path and hand measurement to the Performance Analyzer.
+When performance is material, identify the suspected hot path and apply your Performance Analyzer workflow for measurement.
 
 ---
 
@@ -1842,7 +1869,7 @@ Do not hide a widened scope behind a small user-visible change.
 
 # 82. Durable Frontend Test Coverage
 
-When the frontend behavior represents a meaningful regression risk, provide the Automated Test Engineer with:
+When the frontend behavior represents a meaningful regression risk, apply your Automated Test Engineer workflow with:
 
 ```text
 protected behavior
@@ -1872,7 +1899,7 @@ combination
 runtime-only scenario
 ```
 
-The Automated Test Engineer owns final test design/implementation.
+Use your Automated Test Engineer workflow for final test design and implementation.
 
 Do not create a browser test for pure server business logic solely because the feature is visible in the UI.
 
@@ -1901,7 +1928,7 @@ frontend unit test passes
     != production asset build/browser integration passes
 ```
 
-Use the existing Regression & Runtime Validator for environment-specific proof.
+Use your existing Regression & Runtime Validator workflow for environment-specific proof.
 
 ---
 
@@ -2039,7 +2066,7 @@ Do not report `VALIDATED FOR REVIEWED SCOPE` when required browser proof was una
 
 # 89. Concise Output for Embedded Implementation Work
 
-When this guidance runs inside an already-authorized implementation task, keep evidence concise unless the frontend surface is complex.
+When you apply this skill inside an already-authorized implementation task, keep evidence concise unless the frontend surface is complex.
 
 A concise handoff may be:
 
@@ -2056,7 +2083,7 @@ Runtime test:
 Do-not-touch:
 ```
 
-Then continue through Plemo's native planning/implementation workflow.
+Then continue through your native planning/implementation workflow.
 
 Do not expose internal skill routing or produce a second generic implementation plan.
 
