@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -81,6 +81,12 @@ An Odoo frontend and OWL engineering specialist for investigating, designing, im
 
 An Odoo integration-reliability specialist for investigating, designing, implementing, reviewing, and debugging external API, webhook, polling, synchronization, queue/job, and provider workflows under real distributed-system failure conditions. It traces the Odoo business owner, transport boundary, external identifiers, synchronization state, credentials/configuration scope, provider contract/version, transaction boundaries, and recovery path; then applies explicit rules for bounded retry, timeout ambiguity, rate limits, durable idempotency, duplicate and out-of-order webhook delivery, pagination/cursors, source-of-truth mappings, schema drift, multi-company/multi-website ownership, reconciliation, operator recovery, and sanitized observability. It does not replace Security, Migration, Performance, Impact, Automated Testing, or Runtime Validation: it identifies and owns the integration protocol/reliability contract, reuses those skills' evidence, hands durable regression scenarios to the Automated Test Engineer, and leaves provider/sandbox/runtime proof to the Regression & Runtime Validator.
 
+### 12. Odoo Reporting & Document Specialist
+
+**File:** `odoo_reporting_document_specialist_skill.md`
+
+An Odoo reporting and document-generation specialist for investigating, designing, implementing, reviewing, debugging, and safely extending QWeb/PDF/HTML reports, report actions, data providers, external layouts, paper formats, report attachments, mail-attached documents, portal/public downloads, barcodes/images, multi-company branding, multilingual/RTL output, and repository-supported custom export formats. It detects the actual Odoo version and rendering engine before selecting APIs or layout techniques; traces the report action → report-data → template/inheritance → external-layout → paper-format/renderer → attachment/download/mail chain; preserves authoritative business and legal values; keeps complex data preparation out of QWeb where appropriate; and explicitly separates HTML correctness from real PDF/document rendering proof. It reuses Localization for translation mechanics and Arabic wording, Security for deep authorization/access review, Migration for persistent report/XML-ID/`noupdate` changes, Performance for measured report bottlenecks, Automated Testing for durable semantic coverage, and Runtime Validation for actual renderer/PDF/portal/mail proof rather than duplicating those workflows.
+
 ## Skill Interaction Model
 
 ```text
@@ -122,6 +128,8 @@ General rules:
 - Frontend/OWL engineering must detect the actual Odoo version and frontend surface, trace component/template/service/registry/patch/asset/server ownership before implementation, prefer the narrowest supported extension point, keep business/security enforcement server-side, and separate static frontend confidence from actual browser/runtime proof.
 - Integration/webhook reliability must treat external identifiers and synchronization state as compatibility data, classify timeout/retry behavior, make material side effects idempotent, handle duplicate/out-of-order delivery safely, preserve a reconciliation path for uncertain outcomes, and avoid live external side effects during ordinary automated testing.
 - A transport success or HTTP 2xx must not automatically be treated as final business success, and a timeout must not automatically be treated as remote failure when the provider may already have committed the operation.
+- Reporting/document work must detect the actual Odoo version and renderer, trace report action/data/template/layout/paper-format/delivery ownership, preserve authoritative business/legal values, keep security server-side, and distinguish HTML/static correctness from actual generated-document proof.
+- Report localization must reuse the localization workflow for translation mechanics and Arabic terminology, while the reporting workflow owns document language context, layout/RTL behavior, renderer compatibility, attachment semantics, and final generated-output requirements.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -139,5 +147,6 @@ Plemo-Skills/
 ├── odoo_code_quality_reviewer_skill.md
 ├── odoo_automated_test_engineer_skill.md
 ├── odoo_frontend_owl_specialist_skill.md
-└── odoo_integration_webhook_reliability_specialist_skill.md
+├── odoo_integration_webhook_reliability_specialist_skill.md
+└── odoo_reporting_document_specialist_skill.md
 ```
