@@ -93,6 +93,12 @@ An Odoo reporting and document-generation specialist for investigating, designin
 
 A Plemo-directed specialist for the **operational movement of Odoo business records** through native import/export facilities and repository-supported CSV/XLSX/file pipelines. Based on Plemo's native capability assessment, it does not recreate native repository/version discovery or generic verification. Instead, it requires explicit data/field contracts, stable record identity and create/update/skip/reject rules, ambiguous/archived-record handling, repeatable imports, missing-versus-empty/null/zero/false semantics, relational/company mapping, validation previews, transaction atomicity, partial-failure recovery, restart checkpoints, row-level error reporting, data reconciliation, and stable raw-data export schemas and round trips. It reuses Migration for installed-database evolution, Integration for external transport and continuous synchronization, Reporting for printable/document-oriented exports, Security/Performance for deep safeguards, Automated Testing for durable scenarios, and Runtime Validation for actual data-level proof.
 
+### 14. Odoo Production Diagnostics & Observability Specialist
+
+**File:** `odoo_production_diagnostics_observability_specialist_skill.md`
+
+A Plemo-directed **incident-triage and evidence-correlation specialist** grounded in Plemo's native-capability assessment and actual diagnostic-tool limits. It classifies active/historical/intermittent incidents, affected scope and business side-effect risk; reconstructs bounded timelines; distinguishes local developer logs, Odoo.sh build/startup logs, and production request-time evidence; traces only observed or clearly inferred layers; isolates the first trustworthy failure from wrapper/secondary errors; and produces precise evidence requests, confirmed-versus-hypothetical findings, confidence, and safe stop conditions. It cannot grant missing production log, PostgreSQL, worker, proxy, browser, or resource-metric access and does not replace native debugging or read-only authorization. It reuses Codebase Investigator for source ownership, Regression & Runtime Validator for post-fix proof, Performance for measurement, Integration for external reliability, Security for deep access review, and Automated Testing for durable incident-derived coverage.
+
 ## Skill Interaction Model
 
 ```text
@@ -138,6 +144,9 @@ General rules:
 - Report localization must reuse the localization workflow for translation mechanics and Arabic terminology, while the reporting workflow owns document language context, layout/RTL behavior, renderer compatibility, attachment semantics, and final generated-output requirements.
 - Operational data import/export must establish stable record matching and ambiguity behavior, explicit field-value and source-of-truth policies, preview/apply and transaction semantics, safe repeat/restart behavior, and reconciliation against actual business results; native discovery and generic version grounding are reused rather than duplicated.
 - Machine-readable data exports must preserve deliberate schema/identity/encoding/order/null contracts and server-side actor/company/field authorization. Migration scripts, external API/webhook protocols, and document-oriented reporting remain with their owning skills.
+- Production diagnostics must respect actual tool/environment reach: developer-local Odoo logs and Odoo.sh build/startup logs are not arbitrary production request-time evidence. When necessary sources are inaccessible, request a bounded redacted operator artifact; never claim unseen logs, PostgreSQL/worker state, metrics, or browser traces were inspected.
+- Incident investigation must classify active/historical/intermittent state, affected record/user/company/database/service scope and side-effect risk; build a time-and-source-grounded timeline; separate first trustworthy failures from wrapper symptoms and confirmed causes from hypotheses; and prohibit unsafe live re-triggering during diagnosis-only work.
+- Production Diagnostics owns incident intake, cross-layer evidence correlation, unavailable-evidence reporting, and narrow next-step requests—not post-change Runtime Validation, measured Performance methodology, static Codebase Investigation, or external Integration protocol engineering.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -157,5 +166,6 @@ Plemo-Skills/
 ├── odoo_frontend_owl_specialist_skill.md
 ├── odoo_integration_webhook_reliability_specialist_skill.md
 ├── odoo_reporting_document_specialist_skill.md
-└── odoo_data_import_export_exchange_specialist_skill.md
+├── odoo_data_import_export_exchange_specialist_skill.md
+└── odoo_production_diagnostics_observability_specialist_skill.md
 ```
