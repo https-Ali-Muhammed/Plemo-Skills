@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -87,6 +87,12 @@ An Odoo integration-reliability specialist for investigating, designing, impleme
 
 An Odoo reporting and document-generation specialist for investigating, designing, implementing, reviewing, debugging, and safely extending QWeb/PDF/HTML reports, report actions, data providers, external layouts, paper formats, report attachments, mail-attached documents, portal/public downloads, barcodes/images, multi-company branding, multilingual/RTL output, and repository-supported custom export formats. It detects the actual Odoo version and rendering engine before selecting APIs or layout techniques; traces the report action → report-data → template/inheritance → external-layout → paper-format/renderer → attachment/download/mail chain; preserves authoritative business and legal values; keeps complex data preparation out of QWeb where appropriate; and explicitly separates HTML correctness from real PDF/document rendering proof. It reuses Localization for translation mechanics and Arabic wording, Security for deep authorization/access review, Migration for persistent report/XML-ID/`noupdate` changes, Performance for measured report bottlenecks, Automated Testing for durable semantic coverage, and Runtime Validation for actual renderer/PDF/portal/mail proof rather than duplicating those workflows.
 
+### 13. Odoo Data Import, Export & Data Exchange Specialist
+
+**File:** `odoo_data_import_export_exchange_specialist_skill.md`
+
+A Plemo-directed specialist for the **operational movement of Odoo business records** through native import/export facilities and repository-supported CSV/XLSX/file pipelines. Based on Plemo's native capability assessment, it does not recreate native repository/version discovery or generic verification. Instead, it requires explicit data/field contracts, stable record identity and create/update/skip/reject rules, ambiguous/archived-record handling, repeatable imports, missing-versus-empty/null/zero/false semantics, relational/company mapping, validation previews, transaction atomicity, partial-failure recovery, restart checkpoints, row-level error reporting, data reconciliation, and stable raw-data export schemas and round trips. It reuses Migration for installed-database evolution, Integration for external transport and continuous synchronization, Reporting for printable/document-oriented exports, Security/Performance for deep safeguards, Automated Testing for durable scenarios, and Runtime Validation for actual data-level proof.
+
 ## Skill Interaction Model
 
 ```text
@@ -130,6 +136,8 @@ General rules:
 - A transport success or HTTP 2xx must not automatically be treated as final business success, and a timeout must not automatically be treated as remote failure when the provider may already have committed the operation.
 - Reporting/document work must detect the actual Odoo version and renderer, trace report action/data/template/layout/paper-format/delivery ownership, preserve authoritative business/legal values, keep security server-side, and distinguish HTML/static correctness from actual generated-document proof.
 - Report localization must reuse the localization workflow for translation mechanics and Arabic terminology, while the reporting workflow owns document language context, layout/RTL behavior, renderer compatibility, attachment semantics, and final generated-output requirements.
+- Operational data import/export must establish stable record matching and ambiguity behavior, explicit field-value and source-of-truth policies, preview/apply and transaction semantics, safe repeat/restart behavior, and reconciliation against actual business results; native discovery and generic version grounding are reused rather than duplicated.
+- Machine-readable data exports must preserve deliberate schema/identity/encoding/order/null contracts and server-side actor/company/field authorization. Migration scripts, external API/webhook protocols, and document-oriented reporting remain with their owning skills.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -148,5 +156,6 @@ Plemo-Skills/
 ├── odoo_automated_test_engineer_skill.md
 ├── odoo_frontend_owl_specialist_skill.md
 ├── odoo_integration_webhook_reliability_specialist_skill.md
-└── odoo_reporting_document_specialist_skill.md
+├── odoo_reporting_document_specialist_skill.md
+└── odoo_data_import_export_exchange_specialist_skill.md
 ```
