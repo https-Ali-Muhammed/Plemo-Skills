@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, cross-version source compatibility, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -99,6 +99,12 @@ A Plemo-directed specialist for the **operational movement of Odoo business reco
 
 A Plemo-directed **incident-triage and evidence-correlation specialist** grounded in Plemo's native-capability assessment and actual diagnostic-tool limits. It classifies active/historical/intermittent incidents, affected scope and business side-effect risk; reconstructs bounded timelines; distinguishes local developer logs, Odoo.sh build/startup logs, and production request-time evidence; traces only observed or clearly inferred layers; isolates the first trustworthy failure from wrapper/secondary errors; and produces precise evidence requests, confirmed-versus-hypothetical findings, confidence, and safe stop conditions. It cannot grant missing production log, PostgreSQL, worker, proxy, browser, or resource-metric access and does not replace native debugging or read-only authorization. It reuses Codebase Investigator for source ownership, Regression & Runtime Validator for post-fix proof, Performance for measurement, Integration for external reliability, Security for deep access review, and Automated Testing for durable incident-derived coverage.
 
+### 16. Odoo Cross-Version Source Compatibility Analyzer
+
+**File:** `odoo_cross_version_source_compatibility_analyzer_skill.md`
+
+A Plemo-directed **cross-version evidence provider** created from the native-capability assessment for the proposed Version Compatibility skill. It does not duplicate Plemo's existing version detection or become a second upgrade planner. Given a source Odoo version, a target Odoo version, and a named symbol or framework area, it builds comparable source/target snapshots; classifies removed, renamed, moved, deprecated, signature-changed, behavior-changed, replaced, or now-native contracts; verifies semantic rather than name-only replacements; detects stale copied-upstream and compatibility-shim code; records module/dependency and existing-test-framework evolution; and emits reusable compatibility findings with evidence, status, confidence, affected custom code, migration implications, test requirements, and runtime-proof requirements. Installed-database/schema/data transformation remains with Upgrade & Migration Analyzer, target frontend architecture with Frontend & OWL Specialist, report implementation with Reporting & Document Specialist, external-provider versioning with Integration & Webhook Reliability Specialist, test design with Automated Test Engineer, and post-change proof with Regression & Runtime Validator.
+
 ## Skill Interaction Model
 
 ```text
@@ -147,6 +153,9 @@ General rules:
 - Production diagnostics must respect actual tool/environment reach: developer-local Odoo logs and Odoo.sh build/startup logs are not arbitrary production request-time evidence. When necessary sources are inaccessible, request a bounded redacted operator artifact; never claim unseen logs, PostgreSQL/worker state, metrics, or browser traces were inspected.
 - Incident investigation must classify active/historical/intermittent state, affected record/user/company/database/service scope and side-effect risk; build a time-and-source-grounded timeline; separate first trustworthy failures from wrapper symptoms and confirmed causes from hypotheses; and prohibit unsafe live re-triggering during diagnosis-only work.
 - Production Diagnostics owns incident intake, cross-layer evidence correlation, unavailable-evidence reporting, and narrow next-step requests—not post-change Runtime Validation, measured Performance methodology, static Codebase Investigation, or external Integration protocol engineering.
+- Cross-version compatibility analysis must be scoped to a known source version, target version, and named symbol/area. It produces source→target delta evidence rather than re-performing generic version detection or creating a second implementation plan.
+- Cross-version findings must compare semantic contracts, not only symbol names, and may classify APIs/extension points as compatible, deprecated, behavior/signature changed, renamed, moved, replaced, removed, now-native/redundant, or unverified. Unproven replacements must never be invented.
+- Installed-database/schema/data compatibility remains with Upgrade & Migration Analyzer; external-provider API versioning remains with Integration; target frontend/report architecture remains with their domain specialists; automated test design and runtime proof remain with their owning skills.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -167,5 +176,6 @@ Plemo-Skills/
 ├── odoo_integration_webhook_reliability_specialist_skill.md
 ├── odoo_reporting_document_specialist_skill.md
 ├── odoo_data_import_export_exchange_specialist_skill.md
-└── odoo_production_diagnostics_observability_specialist_skill.md
+├── odoo_production_diagnostics_observability_specialist_skill.md
+└── odoo_cross_version_source_compatibility_analyzer_skill.md
 ```
