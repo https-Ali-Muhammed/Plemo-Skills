@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, cross-version source compatibility, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, cross-version source compatibility, accounting integrity, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -105,6 +105,12 @@ A Plemo-directed **incident-triage and evidence-correlation specialist** grounde
 
 A Plemo-directed **cross-version evidence provider** created from the native-capability assessment for the proposed Version Compatibility skill. It does not duplicate Plemo's existing version detection or become a second upgrade planner. Given a source Odoo version, a target Odoo version, and a named symbol or framework area, it builds comparable source/target snapshots; classifies removed, renamed, moved, deprecated, signature-changed, behavior-changed, replaced, or now-native contracts; verifies semantic rather than name-only replacements; detects stale copied-upstream and compatibility-shim code; records module/dependency and existing-test-framework evolution; and emits reusable compatibility findings with evidence, status, confidence, affected custom code, migration implications, test requirements, and runtime-proof requirements. Installed-database/schema/data transformation remains with Upgrade & Migration Analyzer, target frontend architecture with Frontend & OWL Specialist, report implementation with Reporting & Document Specialist, external-provider versioning with Integration & Webhook Reliability Specialist, test design with Automated Test Engineer, and post-change proof with Regression & Runtime Validator.
 
+### 17. Odoo Accounting Integrity & Financial Workflow Specialist
+
+**File:** `odoo_accounting_integrity_financial_workflow_specialist_skill.md`
+
+A Plemo-directed **financial-integrity and accounting-semantics specialist** created from the native-capability assessment for the broader Accounting & Financial Workflow proposal. It deliberately does not duplicate generic repository discovery, security authorization, migration mechanics, performance measurement, report rendering, provider reliability, automated-test architecture, cross-version API diffing, or runtime validation. Instead, it establishes the authoritative financial contract around `account.move`/`account.move.line`, draft-versus-posted history, balancing, correction paths, reversals and credit/refund flows, journals and numbering, lock dates, taxes and fiscal positions, country accounting-localization boundaries, currency and exchange differences, rounding categories, invoices/bills, payments, residual/payment-state truth, accounting reconciliation/unreconciliation, bank/cash flows, analytic accounting, multi-company financial configuration, financial imports/migrations, stock-valuation accounting boundaries, and financial idempotency. It supplies explicit before/after accounting evidence—balances, taxes, residuals, reconciliation, reversal linkage, company/journal/currency context—and hands authorization, transformation mechanics, measurement, tests, provider transport, document presentation, version evolution, incident correlation, and final runtime proof to their owning skills.
+
 ## Skill Interaction Model
 
 ```text
@@ -156,6 +162,12 @@ General rules:
 - Cross-version compatibility analysis must be scoped to a known source version, target version, and named symbol/area. It produces source→target delta evidence rather than re-performing generic version detection or creating a second implementation plan.
 - Cross-version findings must compare semantic contracts, not only symbol names, and may classify APIs/extension points as compatible, deprecated, behavior/signature changed, renamed, moved, replaced, removed, now-native/redundant, or unverified. Unproven replacements must never be invented.
 - Installed-database/schema/data compatibility remains with Upgrade & Migration Analyzer; external-provider API versioning remains with Integration; target frontend/report architecture remains with their domain specialists; automated test design and runtime proof remain with their owning skills.
+- Accounting-integrity analysis owns financial correctness rather than generic authorization or CRUD mechanics: classify financial object/state, preserve authoritative posting/reversal/reconciliation workflows, protect debit/credit and company/journal/currency invariants, and keep derived residual/payment/tax states tied to their real accounting source.
+- Posted financial history and lock dates are control boundaries, not inconveniences. Do not silently mutate posted history, bypass lock controls, force residual/payment state, or choose a journal/account/tax/write-off policy merely to make an implementation succeed.
+- Financial correction must prefer the authorized accounting path—draft correction, reversal, credit/refund, controlled reconciliation adjustment, or another verified workflow—rather than arbitrary posted-record writes.
+- Accounting reporting presents authoritative financial values but does not own their computation; external integrations prove provider-side outcomes but do not prove Odoo-side financial truth; imports/migrations own movement/transformation mechanics while Accounting Integrity defines the financial invariants that must survive.
+- Retryable financial operations must be financially idempotent: a repeated invoice, posting, payment, reconciliation, credit/refund, bank-import application, or callback must not create a duplicate economic effect merely because technical retry occurred.
+- Material accounting changes should define before/after evidence such as debit/credit totals, tax totals, document total, residual, payment/reconciliation state, reversal linkage, journal, company, currency, lock-date context, and the intended financial delta; absence of a traceback is not accounting proof.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -177,5 +189,6 @@ Plemo-Skills/
 ├── odoo_reporting_document_specialist_skill.md
 ├── odoo_data_import_export_exchange_specialist_skill.md
 ├── odoo_production_diagnostics_observability_specialist_skill.md
-└── odoo_cross_version_source_compatibility_analyzer_skill.md
+├── odoo_cross_version_source_compatibility_analyzer_skill.md
+└── odoo_accounting_integrity_financial_workflow_specialist_skill.md
 ```
