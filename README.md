@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, physical-stock reservation and movement integrity, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -117,6 +117,12 @@ A Plemo-directed **cross-version evidence provider** created from the native-cap
 
 A Plemo-directed **financial-integrity and accounting-semantics specialist** created from the native-capability assessment for the broader Accounting & Financial Workflow proposal. It deliberately does not duplicate generic repository discovery, security authorization, migration mechanics, performance measurement, report rendering, provider reliability, automated-test architecture, cross-version API diffing, or runtime validation. Instead, it establishes the authoritative financial contract around `account.move`/`account.move.line`, draft-versus-posted history, balancing, correction paths, reversals and credit/refund flows, journals and numbering, lock dates, taxes and fiscal positions, country accounting-localization boundaries, currency and exchange differences, rounding categories, invoices/bills, payments, residual/payment-state truth, accounting reconciliation/unreconciliation, bank/cash flows, analytic accounting, multi-company financial configuration, financial imports/migrations, stock-valuation accounting boundaries, and financial idempotency. It supplies explicit before/after accounting evidence—balances, taxes, residuals, reconciliation, reversal linkage, company/journal/currency context—and hands authorization, transformation mechanics, measurement, tests, provider transport, document presentation, version evolution, incident correlation, and final runtime proof to their owning skills.
 
+### 18. Odoo Stock Reservation & Movement Integrity Specialist
+
+**File:** `odoo_stock_reservation_movement_integrity_specialist_skill.md`
+
+A Plemo-directed **physical-stock correctness specialist**, created after a read-only assessment demonstrated gaps in reliable reservation, move/move-line/quant state integrity, lot/serial and package/owner traceability, and prevention of duplicate physical effects. It requires a target-version-grounded inventory fact map—product variant, company, warehouse, locations, UoM, demand/reserved/executed quantities, tracking identity, operation state and origin linkage—before recommending authoritative stock transitions, partial/backorder handling, unreservation, returns or adjustments. It explicitly prohibits workflow-bypassing quant/state writes, unsupported assumptions about negative-stock policy, unsafe real-stock tests, and claiming production stock outcomes from local-only evidence. It provides before/after physical-stock evidence and test/validation contracts; Accounting Integrity retains valuation/accounting truth, while other existing skills retain routing and cross-app impact, ACLs, imports, external-provider reliability, UI, migration, performance measurement, test architecture and runtime proof.
+
 ## Skill Interaction Model
 
 ```text
@@ -179,6 +185,10 @@ General rules:
 - Chatter/message creation, outgoing queue state, SMTP/provider acceptance, recipient mailbox delivery, bounce and human reading are distinct evidence levels; never claim delivery from a `mail.mail` state or unsupported logs.
 - Duplicate/reentrant cron or automation notifications and activities require an explicit business-event repeat policy and safe guard; do not silently delete historical chatter to reduce volume or send production email during investigation/testing.
 - Reporting owns mail-attached document rendering, Integration owns remote mail/messaging-provider contracts, Automated Testing owns test construction, Runtime Validation owns real execution proof, and incoming alias/reply-thread routing remains separately unassessed; unavailable central skill-registry access cannot be inferred from a local plugin listing.
+- Stock Reservation & Movement Integrity owns the Odoo-side **physical inventory contract**: distinguish demand, assigned/reserved quantity, executed quantity and appropriately scoped on-hand/free/forecast stock; verify intended product variant, UoM, company, source/destination, operational state, and lot/serial/package/owner identity before assessing correctness.
+- Preserve authoritative version-verified reservation, unreservation, picking validation, partial/backorder, return and adjustment workflows. Never force stock move/quant state, erase done history, drop traceability links, or assume a negative quantity violates policy without source/configuration evidence.
+- Retryable and concurrent stock operations must not silently create duplicate reservations, moves or physical consumption. Stock evidence must compare appropriately scoped before/after quantities and traceability while distinguishing source/static, local observed, safe test, inferred and unavailable runtime proof; do not validate, scrap or adjust real production stock to test an implementation.
+- Accounting Integrity owns stock valuation and financial entries; physical stock semantics belong to Stock Reservation & Movement Integrity. Routing/replenishment policy, third-party WMS/shipping APIs, CSV/XLSX processing, ACLs, barcode UI, migration, performance measurement, test construction and final runtime validation stay with their existing owners.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -202,5 +212,6 @@ Plemo-Skills/
 ├── odoo_production_diagnostics_observability_specialist_skill.md
 ├── odoo_notification_integrity_recipient_authorization_specialist_skill.md
 ├── odoo_cross_version_source_compatibility_analyzer_skill.md
-└── odoo_accounting_integrity_financial_workflow_specialist_skill.md
+├── odoo_accounting_integrity_financial_workflow_specialist_skill.md
+└── odoo_stock_reservation_movement_integrity_specialist_skill.md
 ```
