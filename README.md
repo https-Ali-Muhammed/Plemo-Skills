@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, cross-version source compatibility, accounting integrity, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -99,6 +99,12 @@ A Plemo-directed specialist for the **operational movement of Odoo business reco
 
 A Plemo-directed **incident-triage and evidence-correlation specialist** grounded in Plemo's native-capability assessment and actual diagnostic-tool limits. It classifies active/historical/intermittent incidents, affected scope and business side-effect risk; reconstructs bounded timelines; distinguishes local developer logs, Odoo.sh build/startup logs, and production request-time evidence; traces only observed or clearly inferred layers; isolates the first trustworthy failure from wrapper/secondary errors; and produces precise evidence requests, confirmed-versus-hypothetical findings, confidence, and safe stop conditions. It cannot grant missing production log, PostgreSQL, worker, proxy, browser, or resource-metric access and does not replace native debugging or read-only authorization. It reuses Codebase Investigator for source ownership, Regression & Runtime Validator for post-fix proof, Performance for measurement, Integration for external reliability, Security for deep access review, and Automated Testing for durable incident-derived coverage.
 
+### 15. Odoo Notification Integrity & Recipient Authorization Specialist
+
+**File:** `odoo_notification_integrity_recipient_authorization_specialist_skill.md`
+
+A Plemo-directed **notification-integrity and recipient–content authorization specialist** created from the native-capability assessment for the broader Mail, Chatter & Notification proposal. It narrowly establishes whether every effective follower, explicit recipient, customer/portal contact, or CC/BCC party is entitled to the **specific message, fields, links, and attachments** they will receive; distinguishes legitimate external transactional recipients from backend record-read permission; protects per-record template rendering, language/company/website context, and authorized audit history; and prevents duplicate or recursive emails/activities caused by crons, automation, retries, or concurrent business events. It separates chatter/queue creation and Odoo-side `sent` states from provider acceptance, actual delivery, bounce, and read evidence, without inventing access to central skill approvals or live provider logs. Security retains ACLs and access enforcement, Reporting retains document rendering, Integration retains external-provider contracts, Automated Testing retains test architecture, Runtime Validation retains execution proof, and inbound alias/reply-thread routing is explicitly deferred for separate assessment.
+
 ### 16. Odoo Cross-Version Source Compatibility Analyzer
 
 **File:** `odoo_cross_version_source_compatibility_analyzer_skill.md`
@@ -168,6 +174,11 @@ General rules:
 - Accounting reporting presents authoritative financial values but does not own their computation; external integrations prove provider-side outcomes but do not prove Odoo-side financial truth; imports/migrations own movement/transformation mechanics while Accounting Integrity defines the financial invariants that must survive.
 - Retryable financial operations must be financially idempotent: a repeated invoice, posting, payment, reconciliation, credit/refund, bank-import application, or callback must not create a duplicate economic effect merely because technical retry occurred.
 - Material accounting changes should define before/after evidence such as debit/credit totals, tax totals, document total, residual, payment/reconciliation state, reversal linkage, journal, company, currency, lock-date context, and the intended financial delta; absence of a traceback is not accounting proof.
+- Notification-integrity analysis owns recipient–content authorization, correct follower/subtype/template and per-record recipient mapping, once-only communication effects, and honesty about what a queued/sent message proves; backend ACLs and record rules remain with Security.
+- An external customer can be legitimately entitled to a transactional email without backend record-read permission; authorization must cover the exact message body, attachments, links and intended recipient policy, not mere Odoo record accessibility.
+- Chatter/message creation, outgoing queue state, SMTP/provider acceptance, recipient mailbox delivery, bounce and human reading are distinct evidence levels; never claim delivery from a `mail.mail` state or unsupported logs.
+- Duplicate/reentrant cron or automation notifications and activities require an explicit business-event repeat policy and safe guard; do not silently delete historical chatter to reduce volume or send production email during investigation/testing.
+- Reporting owns mail-attached document rendering, Integration owns remote mail/messaging-provider contracts, Automated Testing owns test construction, Runtime Validation owns real execution proof, and incoming alias/reply-thread routing remains separately unassessed; unavailable central skill-registry access cannot be inferred from a local plugin listing.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -189,6 +200,7 @@ Plemo-Skills/
 ├── odoo_reporting_document_specialist_skill.md
 ├── odoo_data_import_export_exchange_specialist_skill.md
 ├── odoo_production_diagnostics_observability_specialist_skill.md
+├── odoo_notification_integrity_recipient_authorization_specialist_skill.md
 ├── odoo_cross_version_source_compatibility_analyzer_skill.md
 └── odoo_accounting_integrity_financial_workflow_specialist_skill.md
 ```
