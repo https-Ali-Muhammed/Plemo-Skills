@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, physical-stock reservation and movement integrity, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, physical-stock reservation and movement integrity, ORM behavioral contracts and side-effect integrity, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -123,6 +123,12 @@ A Plemo-directed **financial-integrity and accounting-semantics specialist** cre
 
 A Plemo-directed **physical-stock correctness specialist**, created after a read-only assessment demonstrated gaps in reliable reservation, move/move-line/quant state integrity, lot/serial and package/owner traceability, and prevention of duplicate physical effects. It requires a target-version-grounded inventory fact map—product variant, company, warehouse, locations, UoM, demand/reserved/executed quantities, tracking identity, operation state and origin linkage—before recommending authoritative stock transitions, partial/backorder handling, unreservation, returns or adjustments. It explicitly prohibits workflow-bypassing quant/state writes, unsupported assumptions about negative-stock policy, unsafe real-stock tests, and claiming production stock outcomes from local-only evidence. It provides before/after physical-stock evidence and test/validation contracts; Accounting Integrity retains valuation/accounting truth, while other existing skills retain routing and cross-app impact, ACLs, imports, external-provider reliability, UI, migration, performance measurement, test architecture and runtime proof.
 
+### 19. Odoo ORM Behavioral Contract & Side-Effect Integrity Specialist
+
+**File:** `odoo_orm_behavioral_contract_side_effect_integrity_specialist_skill.md`
+
+A Plemo-directed **cross-cutting ORM behavioral-integrity specialist** created after the native assessment showed substantial existing coverage of ORM code quality but narrower gaps in development-time business invariants, consistency across form/RPC/import/cron callers, transaction/flush/commit visibility, hidden recompute/automation side effects, partial failure, retry/reentry and concurrency-correctness contracts. It requires source-verified method and caller expectations, an explicit precondition → effect → postcondition contract, transaction-owner awareness, once-only business-effect guards where justified, evidence-based failure classification, and concrete test/runtime-verification assertions. It does not repeat Code Quality's structural reviews, Codebase Investigator's discovery, Feature Impact's dependency analysis, Integration's external-provider protocols, Security's authorization analysis, Migration's data-evolution mechanics, Performance's measurements, or domain specialists' accounting/stock/notification policies; Automated Testing and Runtime Validation continue to own executable proof.
+
 ## Skill Interaction Model
 
 ```text
@@ -189,6 +195,9 @@ General rules:
 - Preserve authoritative version-verified reservation, unreservation, picking validation, partial/backorder, return and adjustment workflows. Never force stock move/quant state, erase done history, drop traceability links, or assume a negative quantity violates policy without source/configuration evidence.
 - Retryable and concurrent stock operations must not silently create duplicate reservations, moves or physical consumption. Stock evidence must compare appropriately scoped before/after quantities and traceability while distinguishing source/static, local observed, safe test, inferred and unavailable runtime proof; do not validate, scrap or adjust real production stock to test an implementation.
 - Accounting Integrity owns stock valuation and financial entries; physical stock semantics belong to Stock Reservation & Movement Integrity. Routing/replenishment policy, third-party WMS/shipping APIs, CSV/XLSX processing, ACLs, barcode UI, migration, performance measurement, test construction and final runtime validation stay with their existing owners.
+- ORM behavioral-integrity analysis must name the business invariant and caller-visible method contract before selecting a fix, then compare only real material entry points and direct/indirect side effects; Code Quality remains responsible for method and field structure, and Codebase Investigator for inheritance/caller discovery.
+- An ORM cache value, flush, method return, job enqueue, or successful local test does not independently establish a committed business outcome. Verify the transaction owner, rollback/partial-failure behavior, and actual observation scope; do not add manual commits, cursors, or bypasses as a shortcut.
+- Retryable ORM operations and concurrent requests require a domain-grounded business operation identity and evidence of once-only business effect where necessary. Integration owns provider-side retries/reconciliation, Performance owns locking cost, domain specialists own their business invariants, and Automated Testing/Runtime Validation own executable proof.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -213,5 +222,6 @@ Plemo-Skills/
 ├── odoo_notification_integrity_recipient_authorization_specialist_skill.md
 ├── odoo_cross_version_source_compatibility_analyzer_skill.md
 ├── odoo_accounting_integrity_financial_workflow_specialist_skill.md
-└── odoo_stock_reservation_movement_integrity_specialist_skill.md
+├── odoo_stock_reservation_movement_integrity_specialist_skill.md
+└── odoo_orm_behavioral_contract_side_effect_integrity_specialist_skill.md
 ```
