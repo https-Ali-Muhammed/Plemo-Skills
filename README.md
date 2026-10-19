@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, physical-stock reservation and movement integrity, ORM behavioral contracts and side-effect integrity, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, physical-stock reservation and movement integrity, ORM behavioral contracts and side-effect integrity, declarative action/navigation integrity, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -129,6 +129,12 @@ A Plemo-directed **physical-stock correctness specialist**, created after a read
 
 A Plemo-directed **cross-cutting ORM behavioral-integrity specialist** created after the native assessment showed substantial existing coverage of ORM code quality but narrower gaps in development-time business invariants, consistency across form/RPC/import/cron callers, transaction/flush/commit visibility, hidden recompute/automation side effects, partial failure, retry/reentry and concurrency-correctness contracts. It requires source-verified method and caller expectations, an explicit precondition → effect → postcondition contract, transaction-owner awareness, once-only business-effect guards where justified, evidence-based failure classification, and concrete test/runtime-verification assertions. It does not repeat Code Quality's structural reviews, Codebase Investigator's discovery, Feature Impact's dependency analysis, Integration's external-provider protocols, Security's authorization analysis, Migration's data-evolution mechanics, Performance's measurements, or domain specialists' accounting/stock/notification policies; Automated Testing and Runtime Validation continue to own executable proof.
 
+### 20. Odoo Declarative Action & Navigation Integrity Specialist
+
+**File:** `odoo_declarative_action_navigation_integrity_specialist_skill.md`
+
+A Plemo-directed **declarative UI click-to-outcome specialist** created after the read-only native-capability assessment found that object/action buttons, window/server/client actions, menus, contextual selections and wizard navigation were covered only by scattered incident lessons rather than one systematic functional contract. It classifies the effective trigger, verifies the resolved model/method or action record and selected records, traces `active_*`/`default_*` context and domains, distinguishes the intended backend effect from return/action/navigation behavior, and identifies the first evidenced failing layer. It requires source-versus-local-database-versus-browser evidence honesty, safeguards against blind retries and unauthorized real business actions, and explicit user-visible outcome assertions. Codebase Investigator retains XML/XPath ownership discovery; Code Quality retains view maintainability; Frontend & OWL retains JS/OWL runtime architecture; ORM Behavioral Contract owns backend state and transaction effects; Security owns authorization; Reporting owns document rendering; Migration and Cross-Version own persistence/version evolution; Automated Testing and Runtime Validation own executable proof.
+
 ## Skill Interaction Model
 
 ```text
@@ -198,6 +204,10 @@ General rules:
 - ORM behavioral-integrity analysis must name the business invariant and caller-visible method contract before selecting a fix, then compare only real material entry points and direct/indirect side effects; Code Quality remains responsible for method and field structure, and Codebase Investigator for inheritance/caller discovery.
 - An ORM cache value, flush, method return, job enqueue, or successful local test does not independently establish a committed business outcome. Verify the transaction owner, rollback/partial-failure behavior, and actual observation scope; do not add manual commits, cursors, or bypasses as a shortcut.
 - Retryable ORM operations and concurrent requests require a domain-grounded business operation identity and evidence of once-only business effect where necessary. Integration owns provider-side retries/reconciliation, Performance owns locking cost, domain specialists own their business invariants, and Automated Testing/Runtime Validation own executable proof.
+- Declarative action/navigation integrity must trace the effective UI trigger through action or method resolution, record selection, company/context/default/domain, intended backend effect, returned action, and expected user navigation; a valid XML file or successful Python method does not by itself prove a working click.
+- A button that performs its backend effect but returns no navigation is not automatically broken, and a missing or unexpected UI result is not permission to replay a potentially non-idempotent business action. Diagnose the first evidenced failing layer before recommending changes.
+- Distinguish Git/source XML from installed action/menu/view records, local process logs, and actual browser/navigation evidence. When browser access or target-environment runtime observation is missing, mark it unverified or blocked rather than claiming interactive success.
+- UI wiring owns declarative object/action buttons, action/menu binding and wizard navigation contracts; XML/XPath investigation, OWL component/client implementation, ORM business integrity, ACL decisions, report rendering, persistent metadata migration, test design and runtime verification retain their existing specialist owners.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -223,5 +233,6 @@ Plemo-Skills/
 ├── odoo_cross_version_source_compatibility_analyzer_skill.md
 ├── odoo_accounting_integrity_financial_workflow_specialist_skill.md
 ├── odoo_stock_reservation_movement_integrity_specialist_skill.md
-└── odoo_orm_behavioral_contract_side_effect_integrity_specialist_skill.md
+├── odoo_orm_behavioral_contract_side_effect_integrity_specialist_skill.md
+└── odoo_declarative_action_navigation_integrity_specialist_skill.md
 ```
