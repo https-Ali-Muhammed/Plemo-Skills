@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, physical-stock reservation and movement integrity, ORM behavioral contracts and side-effect integrity, declarative action/navigation integrity, local development environment and startup recovery, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, physical-stock reservation and movement integrity, ORM behavioral contracts and side-effect integrity, declarative action/navigation integrity, local development environment and startup recovery, native scheduler and automation trigger integrity, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -141,6 +141,12 @@ A Plemo-directed **declarative UI click-to-outcome specialist** created after th
 
 A Plemo-directed **developer-local environment identity, startup classification, and safe recovery specialist** created after a read-only native-capability assessment found no systematic procedure for Python/virtualenv dependency mismatches, PostgreSQL connection versus registry errors, effective `addons_path` and duplicate technical-module directories, or source-to-running-process activation after a pull or branch switch. It verifies the actual checkout, interpreter, launcher, non-secret configuration, local database and loading stage; identifies the first evidence-backed failure; and proposes the smallest authorized local remedy with explicit safety stops, confidence labels, and environment-readiness evidence. Codebase Investigator retains addon/dependency discovery; Production Diagnostics owns running-system incidents; Upgrade & Migration owns persistent-data changes; Cross-Version owns source/target compatibility; Security owns credential/access decisions; and Automated Testing/Runtime Validation own executable and post-change proof. The skill cannot grant missing OS/PostgreSQL/browsing privileges or imply that GitHub installation equals Plemo activation.
 
+### 22. Odoo Native Scheduler & Automation Trigger Integrity Specialist
+
+**File:** `odoo_native_scheduler_automation_trigger_integrity_specialist_skill.md`
+
+A Plemo-directed **native scheduling, trigger-eligibility and dispatch-lifecycle integrity specialist** justified by a 100-question read-only capability assessment. It verifies the actual target-version `ir.cron`, `base.automation`, and internally dispatched `ir.actions.server` contracts; distinguishes source XML from installed records, configured/due metadata from actual execution, passed versus internally selected records, and correct scheduler dispatch from correct business outcomes. It classifies **did not run / ran late / ran more than intended / ran on wrong records or with wrong effects**, detects trigger loops, repeated eligibility, time/company/context mismatches and uncertain retries, and defines evidence and safe verification requirements without inventing scheduler history, queue mechanisms, or production access. Integration retains external jobs/provider protocols; ORM owns method-side transactions and once-only business invariants; Declarative Action & Navigation owns UI-triggered actions; Security and domain specialists retain authorization, accounting, stock and notification correctness; Diagnostics owns incident timeline correlation; Automated Testing and Runtime Validation own executable proof.
+
 ## Skill Interaction Model
 
 ```text
@@ -218,6 +224,9 @@ General rules:
 - Diagnose Python/package mismatch, PostgreSQL connectivity, addon discovery, registry loading, and code/process/database/asset activation as **distinct layers**. A listening server, valid source file, successful Git pull, or exit code zero does not prove correct module loading or user-facing behavior.
 - During local setup CHECK/REVIEW/DIAGNOSE work, preserve non-mutating evidence and secret redaction: do not install dependencies, restart services, run module upgrades, alter roles/configuration, reset databases, delete volumes or invoke write-capable `odoo_local` operations. Material changes require the actual environment-specific approval and recovery prerequisites.
 - Production Diagnostics retains running-system incidents; Codebase Investigator owns broad addon dependency discovery; Upgrade & Migration owns persistent-data changes; Runtime Validator owns post-change proof; Security, Performance and Cross-Version retain their specialized boundaries. Local `read_odoo_log` or ORM observations are not arbitrary PostgreSQL, browser or production evidence.
+- For native Odoo scheduled/automated work, establish the **mechanism, effective installed record, trigger/eligibility, dispatching actor/company/context, selected population and expected outcome** before modifying `ir.cron`, `base.automation`, or internally invoked `ir.actions.server`. A configured `nextcall` or missing log line does not prove that a job ran or did not run.
+- Separate **scheduler dispatch**, **ORM/business effect**, and **verified target-runtime outcome**. Identify automation loops, reentry, skipped work and overlapping-dispatch risk without inventing queue infrastructure, universal job statuses, manual transaction commits or exactly-once guarantees.
+- Read-only automation diagnosis must never execute, retry, reschedule, enable/disable or edit live scheduled/automated actions; operational authorization for high-impact runs and changes is separate from code-edit authorization. Integration, ORM, Security, domain specialists, Diagnostics, Automated Testing and Runtime Validation retain their respective ownership.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -245,5 +254,6 @@ Plemo-Skills/
 ├── odoo_stock_reservation_movement_integrity_specialist_skill.md
 ├── odoo_orm_behavioral_contract_side_effect_integrity_specialist_skill.md
 ├── odoo_declarative_action_navigation_integrity_specialist_skill.md
-└── odoo_local_development_environment_startup_recovery_specialist_skill.md
+├── odoo_local_development_environment_startup_recovery_specialist_skill.md
+└── odoo_native_scheduler_automation_trigger_integrity_specialist_skill.md
 ```
