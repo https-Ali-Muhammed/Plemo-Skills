@@ -1,6 +1,6 @@
 # Plemo Skills
 
-A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, physical-stock reservation and movement integrity, ORM behavioral contracts and side-effect integrity, declarative action/navigation integrity, and related workflows at Plemo.
+A collection of reusable AI agent skills used for Odoo development, investigation, localization, impact analysis, QA, frontend/OWL engineering, integration reliability, reporting/document generation, operational data exchange, production diagnostics, notification integrity, cross-version source compatibility, accounting integrity, physical-stock reservation and movement integrity, ORM behavioral contracts and side-effect integrity, declarative action/navigation integrity, local development environment and startup recovery, and related workflows at Plemo.
 
 These skills are designed to **extend the agent's native capabilities rather than replace them**. Repository-specific instructions such as `plemo.md`, configured addon paths, and the agent's normal planning and implementation workflow remain authoritative. Skills provide specialized Odoo evidence, procedures, safeguards, and validation rules.
 
@@ -135,6 +135,12 @@ A Plemo-directed **cross-cutting ORM behavioral-integrity specialist** created a
 
 A Plemo-directed **declarative UI click-to-outcome specialist** created after the read-only native-capability assessment found that object/action buttons, window/server/client actions, menus, contextual selections and wizard navigation were covered only by scattered incident lessons rather than one systematic functional contract. It classifies the effective trigger, verifies the resolved model/method or action record and selected records, traces `active_*`/`default_*` context and domains, distinguishes the intended backend effect from return/action/navigation behavior, and identifies the first evidenced failing layer. It requires source-versus-local-database-versus-browser evidence honesty, safeguards against blind retries and unauthorized real business actions, and explicit user-visible outcome assertions. Codebase Investigator retains XML/XPath ownership discovery; Code Quality retains view maintainability; Frontend & OWL retains JS/OWL runtime architecture; ORM Behavioral Contract owns backend state and transaction effects; Security owns authorization; Reporting owns document rendering; Migration and Cross-Version own persistence/version evolution; Automated Testing and Runtime Validation own executable proof.
 
+### 21. Odoo Local Development Environment & Startup Recovery Specialist
+
+**File:** `odoo_local_development_environment_startup_recovery_specialist_skill.md`
+
+A Plemo-directed **developer-local environment identity, startup classification, and safe recovery specialist** created after a read-only native-capability assessment found no systematic procedure for Python/virtualenv dependency mismatches, PostgreSQL connection versus registry errors, effective `addons_path` and duplicate technical-module directories, or source-to-running-process activation after a pull or branch switch. It verifies the actual checkout, interpreter, launcher, non-secret configuration, local database and loading stage; identifies the first evidence-backed failure; and proposes the smallest authorized local remedy with explicit safety stops, confidence labels, and environment-readiness evidence. Codebase Investigator retains addon/dependency discovery; Production Diagnostics owns running-system incidents; Upgrade & Migration owns persistent-data changes; Cross-Version owns source/target compatibility; Security owns credential/access decisions; and Automated Testing/Runtime Validation own executable and post-change proof. The skill cannot grant missing OS/PostgreSQL/browsing privileges or imply that GitHub installation equals Plemo activation.
+
 ## Skill Interaction Model
 
 ```text
@@ -208,6 +214,10 @@ General rules:
 - A button that performs its backend effect but returns no navigation is not automatically broken, and a missing or unexpected UI result is not permission to replay a potentially non-idempotent business action. Diagnose the first evidenced failing layer before recommending changes.
 - Distinguish Git/source XML from installed action/menu/view records, local process logs, and actual browser/navigation evidence. When browser access or target-environment runtime observation is missing, mark it unverified or blocked rather than claiming interactive success.
 - UI wiring owns declarative object/action buttons, action/menu binding and wizard navigation contracts; XML/XPath investigation, OWL component/client implementation, ORM business integrity, ACL decisions, report rendering, persistent metadata migration, test design and runtime verification retain their existing specialist owners.
+- Local development environment recovery must establish the **actual** checkout, launcher, Python interpreter, effective config/addon paths, selected database, and earliest trustworthy error before recommending an installation, restart, config change, or module update; shell defaults and stale Git status snapshots are not runtime identity proof.
+- Diagnose Python/package mismatch, PostgreSQL connectivity, addon discovery, registry loading, and code/process/database/asset activation as **distinct layers**. A listening server, valid source file, successful Git pull, or exit code zero does not prove correct module loading or user-facing behavior.
+- During local setup CHECK/REVIEW/DIAGNOSE work, preserve non-mutating evidence and secret redaction: do not install dependencies, restart services, run module upgrades, alter roles/configuration, reset databases, delete volumes or invoke write-capable `odoo_local` operations. Material changes require the actual environment-specific approval and recovery prerequisites.
+- Production Diagnostics retains running-system incidents; Codebase Investigator owns broad addon dependency discovery; Upgrade & Migration owns persistent-data changes; Runtime Validator owns post-change proof; Security, Performance and Cross-Version retain their specialized boundaries. Local `read_odoo_log` or ORM observations are not arbitrary PostgreSQL, browser or production evidence.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -234,5 +244,6 @@ Plemo-Skills/
 ├── odoo_accounting_integrity_financial_workflow_specialist_skill.md
 ├── odoo_stock_reservation_movement_integrity_specialist_skill.md
 ├── odoo_orm_behavioral_contract_side_effect_integrity_specialist_skill.md
-└── odoo_declarative_action_navigation_integrity_specialist_skill.md
+├── odoo_declarative_action_navigation_integrity_specialist_skill.md
+└── odoo_local_development_environment_startup_recovery_specialist_skill.md
 ```
