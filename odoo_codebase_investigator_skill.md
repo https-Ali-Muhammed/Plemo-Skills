@@ -937,6 +937,85 @@ booking_form.js
 UI
 ```
 
+### 38.1 Website/Portal Request Lifecycle Trace — Use Only When Material
+
+You are Plemo. When a concrete website or portal form, request, link, or redirect behaves incorrectly and §§35–38 have established route ownership, extend **the same controller investigation** with this focused request-to-outcome trace. Do not create a second general controller inventory, security audit, frontend architecture analysis, or test plan.
+
+Read every instruction in this subsection as directed to **you, Plemo**. The developer, requester, portal user, customer, and operator are actors in the task; they are not the audience of these instructions. Follow `plemo.md`, the actual project/version and your native task-mode permissions. Apply this quietly during ordinary work without asking the requester to invoke a numbered skill.
+
+Use a light path when the evidence already establishes one broken form target, helper reference, or redirect. Expand to the complete chain only when a material effect, multi-route interaction, version-sensitive behavior, or contradictory observation warrants it. The goal is to identify the **first evidenced divergence**, not to speculate about every possible website defect.
+
+#### 38.1.1 Establish the specific interaction
+
+Capture the *reported* browser URL/path, HTTP method, original page/template, submit target or link, actor type, expected outcome and actual symptom. Identify the Odoo version and owning module from verified project source. Classify the entry as a native website form, custom website/portal controller, HTTP/JSON route, or frontend-only interaction; do not assume every website form uses the same handler.
+
+Reuse the controller ownership, overrides, route metadata, template inheritance and caller evidence already assembled in §§35–38. Distinguish repository-declared routing from what the selected database/process has actually loaded. A route defined in Python is not proof that the running environment dispatched a particular request to it.
+
+#### 38.1.2 Confirm controller class and helper ownership
+
+For each material route, name the **actual controller class** and its source file. Resolve inheritance/overrides and any relevant route redeclaration. When a handler calls `self.some_helper(...)`, verify that the helper belongs to the instantiated controller's class or actual ancestor/mixin; a similarly named helper in another sibling `http.Controller` class in the same file is not automatically available through `self`.
+
+Record the function that receives the request, relevant parameters, the backend function it calls, and the response or redirect it constructs. Separate the original route, overridden route, and effective runtime handler when evidence permits. Do not infer method resolution from filenames or a neighboring class's methods.
+
+#### 38.1.3 Trace rendered form targets and request shapes
+
+If a form posts to a wrong URL or a route never matches, inspect the **final QWeb-rendered** `action` or `href` and the actual route pattern. For dynamic attributes, distinguish a literal HTML/XML string from target-version-supported `t-att-*` / `t-attf-*` expressions. A literal `{{ record.id }}` inside an ordinary XML attribute need not interpolate. Do not assume the template source itself proves the rendered browser attribute without runtime evidence.
+
+Map the submitted names/values to the controller parameters and eventual model fields. For repeated keys, multi-select values and multiple uploaded files, check whether any mapping step converts a multi-value request structure into a plain dictionary and discards duplicates. Inspect the *actual version's* request and website form extraction logic before recommending an API such as `getlist`, an extraction override, or writable-field adjustment. If the native website form handler is in use, verify target-version allowlisting / writable-field behavior for the exact model and field; never bypass authorization or add unrestricted fields merely to make submission succeed.
+
+For malformed, missing, empty or unexpected values, distinguish input-parsing, business validation, and response-rendering failures. Leave detailed access, CSRF, token, attachment and `sudo()` judgments to Security & Access Reviewer. Do not reproduce a state-changing submission during a read-only investigation.
+
+#### 38.1.4 Follow every redirect, guard and template consumer
+
+Build the **full intended request/redirect chain**, not just the first route. Where a later route can independently redirect or reject a state, trace its actual guard and prerequisite too. A change to an entry route (for example a checkout step) does not prove that a downstream payment or confirmation route accepts the new flow. Do not weaken mandatory business or security guards just to eliminate a redirect.
+
+Check final response type (HTML render, HTTP redirect, JSON payload, download, error), expected status, target URL, template and consumer. For templates sharing a controller-provided value (such as pager variables), search material sibling/overridden templates as well as the first one found; a migrated template may use a new data contract while another still assumes obsolete values. Verify the actual Odoo version and template/data contract before proposing syntax or compatibility fixes.
+
+For links generated in portal emails or multi-website flows, identify the **actual code path and source of the host, domain, scheme, language and path**. Do not assume `web.base.url`, `website.domain`, a company relation, the current request host, or an email template is universally authoritative. Inspect the target version, configured website/domain records when accessible read-only, fallback logic, and relevant company/tenant context. Distinguish a source-level expectation from a URL observed in a sent message or browser; do not expose real tokens or customer-specific links in the report.
+
+#### 38.1.5 Separate HTTP success, business effect and user feedback
+
+Write down the expected business action, if any, and the expected return/redirect/user feedback **as separate claims**. A successful HTTP status, redirect, success page, or absence of traceback does not prove record creation, committed state, downstream communication, or delivery. Conversely, an HTTP error/timeout does not by itself prove the operation rolled back. Record uncertainty and avoid unsafe resubmission, payment retries, booking retries or re-sending effects just to test a hypothesis.
+
+If the frontend expects JSON but the route returns an HTML page/redirect, or the controller returns data with an incompatible shape, identify the contract mismatch and hand browser rendering/caller behavior to Frontend & OWL. Leave ORM transaction/side-effect correctness to ORM Behavioral Contract & Side-Effect Integrity. When material, hand real-world impact review to Feature Impact Analyzer and post-change runtime proof to Regression & Runtime Validator.
+
+#### 38.1.6 Evidence classification, safeguards and ownership handoffs
+
+Classify each important statement using the existing §55 vocabulary: **Confirmed**, **Strong evidence**, **Probable**, or **Needs runtime verification**. Say which environment and source the evidence applies to: repository, authorized local database/log, operator-supplied request/network trace, or safe approved test. If browser/network tooling is unavailable, ask for the minimum redacted trace rather than claiming you saw a rendered form or HTTP sequence.
+
+Keep diagnosis-only and review-only tasks read-only. Do not submit a form, follow an effectful route, replay a POST, generate/use a privileged token, alter records, install/upgrade, restart a process or modify files merely to inspect the flow. An already-authorized fix may proceed under your native implementation workflow after this investigation, but live/shared business effects still require their own applicable approval and safety conditions.
+
+Keep ownership narrow:
+
+- **Codebase Investigator (you, here):** static route/controller ownership, concrete request-path evidence, dynamic target/source resolution, cross-route redirect chain and first failing/unverified link.
+- **Security & Access Reviewer:** authentication, portal record authorization, CSRF, IDOR, `sudo()`, tokens, uploaded-file authorization and tenant isolation.
+- **Frontend & OWL Specialist:** browser component/JS behavior, assets, rendered state, client-side interaction and network handling.
+- **Feature Impact Analyzer:** downstream change blast radius and response-consumer compatibility.
+- **ORM Behavioral Contract:** backend write/transaction, side effects, repeat/commit correctness; **Integration:** external provider/webhook effects; **Reporting:** generated document correctness.
+- **Automated Test Engineer / Regression & Runtime Validator:** durable route/redirect/form test implementation and target-environment PASS/FAIL proof; **Production Diagnostics:** production incident timeline and inaccessible-layer evidence.
+
+#### 38.1.7 Focused evidence to append to Controller Flow (§59, section 12)
+
+For a material website/portal failure, append a compact trace to the existing Controller Flow report rather than adding another mandatory report section:
+
+```text
+Interaction / expected result:
+Version + owning addon / source:
+Actual or reported URL + HTTP method:
+Form/link origin + QWeb target expression:
+Effective route -> controller class -> helper/model call:
+Input names / multi-value, file or allowlist transformations when relevant:
+Actor / company / website / language context (non-secret):
+Redirect/guard hops and template/response consumers:
+Expected backend effect vs. expected HTTP/user response:
+Observed outcome and scope (repo / local / supplied trace / safe test):
+First confirmed divergence; alternate hypotheses:
+Confidence and unavailable evidence:
+Other specialist ownership / required validation:
+```
+
+Apply only relevant fields; do not force lengthy reporting for a trivial confirmed issue. Never report an inferred browser route, database commit, or production fix as runtime-verified without direct appropriate evidence.
+
 ---
 
 # JAVASCRIPT INVESTIGATION

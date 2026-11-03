@@ -27,6 +27,8 @@ A specialized Odoo localization skill for investigating, implementing, reviewing
 
 A read-only Odoo investigation skill for tracing feature ownership, repository structure, XML/QWeb inheritance, Python models and method overrides, controllers, JavaScript, assets, dependencies, and existing implementations. It acts as an evidence provider: standalone investigation requests remain read-only, while investigation performed inside an already-authorized implementation task hands its findings back to the agent's native planning workflow without requiring duplicate approval.
 
+It also includes a **focused website/portal request-lifecycle trace** for material form, controller, QWeb target, multi-value payload, cross-route redirect, pager/template, and multi-website link-generation defects. The extension identifies the first evidenced failing layer while leaving deep security, browser/OWL behavior, business-method integrity, automated tests, and runtime proof with their existing owners. No separate Skill 23 is introduced.
+
 ### 3. Odoo Feature Impact Analyzer
 
 **File:** `odoo_feature_impact_analyzer_skill.md`
