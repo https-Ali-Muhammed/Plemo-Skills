@@ -149,6 +149,12 @@ A Plemo-directed **developer-local environment identity, startup classification,
 
 A Plemo-directed **native scheduling, trigger-eligibility and dispatch-lifecycle integrity specialist** justified by a 100-question read-only capability assessment. It verifies the actual target-version `ir.cron`, `base.automation`, and internally dispatched `ir.actions.server` contracts; distinguishes source XML from installed records, configured/due metadata from actual execution, passed versus internally selected records, and correct scheduler dispatch from correct business outcomes. It classifies **did not run / ran late / ran more than intended / ran on wrong records or with wrong effects**, detects trigger loops, repeated eligibility, time/company/context mismatches and uncertain retries, and defines evidence and safe verification requirements without inventing scheduler history, queue mechanisms, or production access. Integration retains external jobs/provider protocols; ORM owns method-side transactions and once-only business invariants; Declarative Action & Navigation owns UI-triggered actions; Security and domain specialists retain authorization, accounting, stock and notification correctness; Diagnostics owns incident timeline correlation; Automated Testing and Runtime Validation own executable proof.
 
+### 23. Odoo Manufacturing Execution & Production Quantity Integrity Specialist
+
+**File:** `odoo_manufacturing_execution_production_quantity_integrity_specialist_skill.md`
+
+A Plemo-directed **manufacturing-domain execution and production-quantity integrity specialist**, narrowly justified by a read-only native assessment. It verifies the effective BoM and MO requirements, establishes Manufacturing Order and work-order transition contracts, reconciles planned versus reserved versus actually consumed materials and main/by-product output using product/UoM-specific evidence, and checks partial-production/backorder progression and consumed-to-produced lot/serial genealogy. It distinguishes MO/WO state from proven production effects, prevents unsafe duplicate completion or consumption on uncertain retries, and requires explicit manufacturing-owner policy for variances, correction, and remaining work. Stock Integrity retains physical moves, reservations and lot mechanics; Accounting retains valuation; ORM retains transaction/reentry mechanisms; Codebase/Impact retain discovery; Security, Migration, Performance, Integration, Diagnostics, Scheduler, Testing, and Runtime Validation retain their specialist responsibilities.
+
 ## Skill Interaction Model
 
 ```text
@@ -229,6 +235,9 @@ General rules:
 - For native Odoo scheduled/automated work, establish the **mechanism, effective installed record, trigger/eligibility, dispatching actor/company/context, selected population and expected outcome** before modifying `ir.cron`, `base.automation`, or internally invoked `ir.actions.server`. A configured `nextcall` or missing log line does not prove that a job ran or did not run.
 - Separate **scheduler dispatch**, **ORM/business effect**, and **verified target-runtime outcome**. Identify automation loops, reentry, skipped work and overlapping-dispatch risk without inventing queue infrastructure, universal job statuses, manual transaction commits or exactly-once guarantees.
 - Read-only automation diagnosis must never execute, retry, reschedule, enable/disable or edit live scheduled/automated actions; operational authorization for high-impact runs and changes is separate from code-edit authorization. Integration, ORM, Security, domain specialists, Diagnostics, Automated Testing and Runtime Validation retain their respective ownership.
+- Manufacturing execution integrity must establish the **actual target-version BoM/variant/company selection, MO and work-order state-transition contract, and typed quantity reconciliation** before claiming production completion. Planned component demand, reserved stock, actual consumption, main product output, by-product output and remaining work are distinct facts; the `done` state alone does not prove all physical, traceability or financial effects.
+- Partial/backorder manufacturing, work-order sequencing, consumption variance, scrap and produced-from-consumed genealogy require the real configured process and, where policy is unresolved, the manufacturing owner's decision. Never invent target-version MRP field names or universal quantity equations; defer stock mechanics to Stock Integrity, valuation to Accounting and concurrency/transaction mechanics to ORM.
+- Read-only manufacturing review must never trigger confirmation, consumption, work-order completion, scrap, unbuild, retries or corrections. Authorization to edit source does not authorize operating real production. Automated Testing and Runtime Validation retain safe executable proof; unavailable production/shop-floor evidence remains unverified.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -257,5 +266,6 @@ Plemo-Skills/
 ├── odoo_orm_behavioral_contract_side_effect_integrity_specialist_skill.md
 ├── odoo_declarative_action_navigation_integrity_specialist_skill.md
 ├── odoo_local_development_environment_startup_recovery_specialist_skill.md
-└── odoo_native_scheduler_automation_trigger_integrity_specialist_skill.md
+├── odoo_native_scheduler_automation_trigger_integrity_specialist_skill.md
+└── odoo_manufacturing_execution_production_quantity_integrity_specialist_skill.md
 ```
