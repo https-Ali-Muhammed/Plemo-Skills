@@ -155,6 +155,12 @@ A Plemo-directed **native scheduling, trigger-eligibility and dispatch-lifecycle
 
 A Plemo-directed **manufacturing-domain execution and production-quantity integrity specialist**, narrowly justified by a read-only native assessment. It verifies the effective BoM and MO requirements, establishes Manufacturing Order and work-order transition contracts, reconciles planned versus reserved versus actually consumed materials and main/by-product output using product/UoM-specific evidence, and checks partial-production/backorder progression and consumed-to-produced lot/serial genealogy. It distinguishes MO/WO state from proven production effects, prevents unsafe duplicate completion or consumption on uncertain retries, and requires explicit manufacturing-owner policy for variances, correction, and remaining work. Stock Integrity retains physical moves, reservations and lot mechanics; Accounting retains valuation; ORM retains transaction/reentry mechanisms; Codebase/Impact retain discovery; Security, Migration, Performance, Integration, Diagnostics, Scheduler, Testing, and Runtime Validation retain their specialist responsibilities.
 
+### 24. Odoo Website Builder & Snippet Lifecycle Integrity Specialist
+
+**File:** `odoo_website_builder_snippet_lifecycle_integrity_specialist_skill.md`
+
+A separate Plemo-directed specialist for **the website-builder snippet instance and editor-to-published-page contract**. Based on Plemo's 72-question read-only assessment and the owner's preference for separately installable skills, it traces snippet registration and insertion, per-instance editor option binding, saved page/website-specific `ir.ui.view` representations, copy-on-write divergence from source, duplication/reordering/removal and JS reinitialization, and Save/reload/published visitor behavior. It supplies evidence-based failure classification and acceptance assertions without claiming browser or production access. Frontend & OWL (#10) retains general OWL/JavaScript, services, patches, bundles and CSS; Codebase Investigator (#2) retains ownership/XPath/controller tracing; Impact, Security, Localization, Migration, Performance, Testing and Runtime Validation retain their respective scopes. This is a new skill file; Skill 10 is not modified.
+
 ## Skill Interaction Model
 
 ```text
@@ -238,6 +244,8 @@ General rules:
 - Manufacturing execution integrity must establish the **actual target-version BoM/variant/company selection, MO and work-order state-transition contract, and typed quantity reconciliation** before claiming production completion. Planned component demand, reserved stock, actual consumption, main product output, by-product output and remaining work are distinct facts; the `done` state alone does not prove all physical, traceability or financial effects.
 - Partial/backorder manufacturing, work-order sequencing, consumption variance, scrap and produced-from-consumed genealogy require the real configured process and, where policy is unresolved, the manufacturing owner's decision. Never invent target-version MRP field names or universal quantity equations; defer stock mechanics to Stock Integrity, valuation to Accounting and concurrency/transaction mechanics to ORM.
 - Read-only manufacturing review must never trigger confirmation, consumption, work-order completion, scrap, unbuild, retries or corrections. Authorization to edit source does not authorize operating real production. Automated Testing and Runtime Validation retain safe executable proof; unavailable production/shop-floor evidence remains unverified.
+- Website Builder & Snippet Lifecycle Integrity owns **one snippet instance's editor-to-saved-to-public contract**: verify palette insertion, per-instance option targeting, persisted page/website view (including customized COW copies), duplication/reinitialization safety, and public rendering as separate facts. A new source template does not prove that saved editor customizations changed; do not overwrite customer-edited content or publish a live page without the relevant operational authority.
+- Frontend & OWL retains general JS/OWL architecture, assets, CSS and lifecycle mechanics; Codebase Investigator retains inheritance and route ownership; Impact, Security, Localization, Migration, Performance, Automated Testing and Runtime Validation retain their separate investigations and proof. The website-builder specialist supplies a narrow instance-persistence contract rather than repeating those procedures.
 - Skill names and numbers are documentation metadata only; operational guidance should be applied internally during normal chat without named routing, invocation requests, or capability announcements.
 
 ## Repository Structure
@@ -267,5 +275,6 @@ Plemo-Skills/
 ├── odoo_declarative_action_navigation_integrity_specialist_skill.md
 ├── odoo_local_development_environment_startup_recovery_specialist_skill.md
 ├── odoo_native_scheduler_automation_trigger_integrity_specialist_skill.md
-└── odoo_manufacturing_execution_production_quantity_integrity_specialist_skill.md
+├── odoo_manufacturing_execution_production_quantity_integrity_specialist_skill.md
+└── odoo_website_builder_snippet_lifecycle_integrity_specialist_skill.md
 ```
